@@ -27,7 +27,7 @@
         :class="[navbarOpen ? 'block rounded shadow-lg' : 'hidden']"
         id="example-navbar-warning"
       >
-        <ul class="flex flex-col lg:flex-row list-none mr-auto">
+        <!-- <ul class="flex flex-col lg:flex-row list-none mr-auto">
           <li class="flex items-center">
             <a
               class="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
@@ -39,8 +39,8 @@
               Docs
             </a>
           </li>
-        </ul>
-        <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
+        </ul> -->
+        <!-- <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
           <li class="flex items-center">
             <PagesDropdown />
           </li>
@@ -91,13 +91,13 @@
               <i class="fas fa-arrow-alt-circle-down"></i> Download
             </button>
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </nav>
 </template>
 <script>
-import PagesDropdown from "@/components/Dropdowns/PagesDropdown.vue";
+// import PagesDropdown from "@/components/Dropdowns/PagesDropdown.vue";
 export default {
   data() {
     return {
@@ -110,7 +110,7 @@ export default {
     },
   },
   components: {
-    PagesDropdown,
+    // PagesDropdown,
   },
 };
 </script>

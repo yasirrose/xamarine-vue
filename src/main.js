@@ -1,10 +1,12 @@
 import { createApp } from "vue";
 import { createWebHistory, createRouter } from "vue-router";
-
+import VueSweetalert2 from 'vue-sweetalert2';
+import Vue3EasyDataTable from 'vue3-easy-data-table';
 // styles
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@/assets/styles/tailwind.css";
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 // mouting point for the whole app
 
@@ -18,6 +20,7 @@ import Auth from "@/layouts/Auth.vue";
 // views for Admin layout
 
 import Dashboard from "@/views/admin/Dashboard.vue";
+import ViewAppointments from "@/views/admin/ViewAppointments.vue";
 import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
 import Maps from "@/views/admin/Maps.vue";
@@ -44,6 +47,10 @@ const routes = [
       {
         path: "/admin/dashboard",
         component: Dashboard,
+      },
+      {
+        path: "/admin/view-appointments",
+        component: ViewAppointments,
       },
       {
         path: "/admin/settings",
@@ -94,4 +101,14 @@ const router = createRouter({
   routes,
 });
 
-createApp(App).use(router).mount("#app");
+const app = createApp(App)
+
+app.use(router);
+
+app.use(VueSweetalert2);
+
+app.use(Vue3EasyDataTable);
+
+app.use('EasyDataTable', Vue3EasyDataTable);
+
+app.mount('#app');

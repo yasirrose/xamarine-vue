@@ -45,14 +45,15 @@
         Something else here
       </a>
       <div class="h-0 my-2 border border-solid border-blueGray-100" />
-      <router-link to="/auth/login" class="text-blueGray-200">
-        <a
+      <!-- <router-link to="/auth/login" class="text-blueGray-200"> -->
+        <a 
           href="javascript:void(0);"
           class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+          v-on:click="logout()"
         >
           Logout
         </a>
-      </router-link>
+      <!-- </router-link> -->
     </div>
   </div>
 </template>
@@ -81,6 +82,12 @@ export default {
         });
       }
     },
+    logout() {
+      console.log("logout");
+      localStorage.removeItem("loginEmail");
+      localStorage.removeItem("id");
+      this.$router.push("/auth/login");
+    }
   },
 };
 </script>

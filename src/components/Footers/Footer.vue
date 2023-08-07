@@ -148,10 +148,10 @@
           <div class="text-sm text-blueGray-500 font-semibold py-1">
             Copyright © {{ date }} VoilaMed by
             <a
-              href="https://www.creative-tim.com?ref=vn-footer"
+              href="/"
               class="text-blueGray-500 hover:text-blueGray-800"
             >
-              Creative Tim
+              ViolaMed
             </a>
             .
           </div>

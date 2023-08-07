@@ -43,9 +43,11 @@
                 </label>
                 <input
                   type="email"
+                  v-model = "email"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="Email"
                 />
+                {{ email }}
               </div>
 
               <div class="relative w-full mb-3">
@@ -57,31 +59,37 @@
                 </label>
                 <input
                   type="password"
+                  v-model = "password"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="Password"
                 />
+                {{ password }}
+
               </div>
               <div>
                 <label class="inline-flex items-center cursor-pointer">
                   <input
                     id="customCheckLogin"
                     type="checkbox"
+                    v-model="rememberMe"
                     class="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
                   />
                   <span class="ml-2 text-sm font-semibold text-blueGray-600">
                     Remember me
                   </span>
                 </label>
+                {{ rememberMe }}
               </div>
 
               <div class="text-center mt-6">
                 <button
                   class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                   type="button"
+                  @click="login()"
                 >
-                <router-link to="/admin/dashboard">
+                <a href="javascript:void(0)">
                   Sign In
-                </router-link>
+                </a>
                 </button>
               </div>
             </form>
@@ -104,15 +112,62 @@
   </div>
 </template>
 <script>
-import github from "@/assets/img/github.svg";
-import google from "@/assets/img/google.svg";
+// import github from "@/assets/img/github.svg";
+// import google from "@/assets/img/google.svg";
+import API from '@/api'
 
 export default {
   data() {
     return {
-      github,
-      google,
+    //   github,
+    //   google,
+      email: '',
+      password: '',
+      rememberMe: false,
     };
   },
+  methods: {
+    login() {
+        console.log("login");
+        // this.$v.email.$touch();
+        // this.$v.password.$touch();
+        // if (this.$v.email.$anyError || this.$v.password.$anyError) {
+        //     return;
+        // }
+
+        const data = {
+            email: this.email,
+            password: this.password,
+            rememberMe: this.rememberMe
+        }
+        console.log('data here:', data);
+
+        API.login(
+            data,
+            data => {
+                console.log(data)
+                    if (data.id) {
+                        localStorage.setItem('id', data.id)
+                        localStorage.setItem('loginEmail', data.email)
+                        this.$router.push("/admin/dashboard");
+                    } else {
+                        this.$swal({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Invalid Credentials',
+                        })
+                    }
+                },
+                err => {
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',    
+                    })
+                    console.log('err :', err);
+            }
+        )
+    }
+  }
 };
 </script>
