@@ -1,7 +1,6 @@
 import { createApp } from "vue";
 import { createWebHistory, createRouter } from "vue-router";
 import VueSweetalert2 from 'vue-sweetalert2';
-import Vue3EasyDataTable from 'vue3-easy-data-table';
 // styles
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -106,9 +105,5 @@ const app = createApp(App)
 app.use(router);
 
 app.use(VueSweetalert2);
-
-app.use(Vue3EasyDataTable);
-
-app.use('EasyDataTable', Vue3EasyDataTable);
 
 app.mount('#app');
