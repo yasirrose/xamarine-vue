@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="appointments-sec">
     <h3>Appointments</h3>
     <ag-grid-vue
-    style="width: 100%; height: 500px"
-    class="ag-theme-alpine"
-    :columnDefs="columnDefs"
-    :rowData="rowData">
-  </ag-grid-vue>
+      style="width: 100%; height: 500px"
+      class="ag-theme-alpine"
+      :columnDefs="columnDefs"
+      :rowData="rowData">
+    </ag-grid-vue>
   </div>
 </template>
 <script>
@@ -30,14 +30,26 @@ export default {
   data() {
     return {
       columnDefs: [
-        { headerName: "Make", field: "make" },
-        { headerName: "Model", field: "model" },
-        { headerName: "Price", field: "price" },
+        { headerName: "Discription", field: "disc" },
+        { headerName: "Date", field: "date" },
+        { headerName: "Start Time", field: "starttime" },
+        { headerName: "End Time", field: "endtime" },
+        { headerName: "Referance Code", field: "referance" },
+        { headerName: "Action", field: "action" },
       ],
       rowData: [
-        { make: "Toyota", model: "Celica", price: 35000 },
-        { make: "Ford", model: "Mondeo", price: 32000 },
-        { make: "Porsche", model: "Boxster", price: 72000 },
+        { disc: "This albo ought to appear tomorrow", date: "9/1/2021", starttime: "4:30 AM", endtime: "5: 30 AM", referance: 12341234, action: "Action" },
+        { disc: "This albo ought to appear tomorrow", date: "9/1/2021", starttime: "4:30 AM", endtime: "5: 30 AM", referance: 12341234, action: "Action" },
+        { disc: "This albo ought to appear tomorrow", date: "9/1/2021", starttime: "4:30 AM", endtime: "5: 30 AM", referance: 12341234, action: "Action" },
+        { disc: "This albo ought to appear tomorrow", date: "9/1/2021", starttime: "4:30 AM", endtime: "5: 30 AM", referance: 12341234, action: "Action" },
+        { disc: "This albo ought to appear tomorrow", date: "9/1/2021", starttime: "4:30 AM", endtime: "5: 30 AM", referance: 12341234, action: "Action" },
+        { disc: "This albo ought to appear tomorrow", date: "9/1/2021", starttime: "4:30 AM", endtime: "5: 30 AM", referance: 12341234, action: "Action" },
+        { disc: "This albo ought to appear tomorrow", date: "9/1/2021", starttime: "4:30 AM", endtime: "5: 30 AM", referance: 12341234, action: "Action" },
+        { disc: "This albo ought to appear tomorrow", date: "9/1/2021", starttime: "4:30 AM", endtime: "5: 30 AM", referance: 12341234, action: "Action" },
+        { disc: "This albo ought to appear tomorrow", date: "9/1/2021", starttime: "4:30 AM", endtime: "5: 30 AM", referance: 12341234, action: "Action" },
+        { disc: "This albo ought to appear tomorrow", date: "9/1/2021", starttime: "4:30 AM", endtime: "5: 30 AM", referance: 12341234, action: "Action" },
+        { disc: "This albo ought to appear tomorrow", date: "9/1/2021", starttime: "4:30 AM", endtime: "5: 30 AM", referance: 12341234, action: "Action" },
+        { disc: "This albo ought to appear tomorrow", date: "9/1/2021", starttime: "4:30 AM", endtime: "5: 30 AM", referance: 12341234, action: "Action" },
       ],
       bootstrap,
       angular,

@@ -20,6 +20,7 @@ import Auth from "@/layouts/Auth.vue";
 
 import Dashboard from "@/views/admin/Dashboard.vue";
 import ViewAppointments from "@/views/admin/ViewAppointments.vue";
+import Schedule from "@/views/admin/Schedule.vue";
 import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
 import Maps from "@/views/admin/Maps.vue";
@@ -50,6 +51,10 @@ const routes = [
       {
         path: "/admin/view-appointments",
         component: ViewAppointments,
+      },
+      {
+        path: "/admin/schedule",
+        component: Schedule,
       },
       {
         path: "/admin/settings",
