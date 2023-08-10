@@ -2,7 +2,7 @@ export default {
   template: `
         <span>
           <v-btn
-            class="text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-1"
+            class="bg-purple-darken-4 text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-1"
             color="#5865f2"
             size="small"
             variant="flat"
