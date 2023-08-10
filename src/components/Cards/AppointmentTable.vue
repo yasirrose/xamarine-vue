@@ -3,10 +3,6 @@
     <v-card>
       <template v-slot:title> Appointments </template>
 
-      <!-- <template v-slot:subtitle>
-        This is a subtitle
-      </template> -->
-
       <template v-slot:text>
         <ag-grid-vue
             style="width: 100%; height: 500px"
@@ -174,3 +170,8 @@ export default {
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 </script>
+<style>
+  .appointments-sec h3 {
+    margin-bottom: 15px;
+  }
+</style>

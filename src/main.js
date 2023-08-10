@@ -20,7 +20,9 @@ import Auth from "@/layouts/Auth.vue";
 
 import Dashboard from "@/views/admin/Dashboard.vue";
 import ViewAppointments from "@/views/admin/ViewAppointments.vue";
+import CreateSurvey from "@/views/admin/CreateSurvey.vue";
 import Schedule from "@/views/admin/Schedule.vue";
+import CreatAppoinment from "@/views/admin/CreatAppoinment.vue";
 import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
 import Maps from "@/views/admin/Maps.vue";
@@ -64,8 +66,16 @@ const routes = [
         component: ViewAppointments,
       },
       {
+        path: "/admin/CreatAppoinment",
+        component: CreatAppoinment,
+      },
+      {
         path: "/admin/schedule/:id",
         component: Schedule,
+      },
+      {
+        path: "/admin/createsurvey",
+        component: CreateSurvey,
       },
       {
         path: "/admin/settings",

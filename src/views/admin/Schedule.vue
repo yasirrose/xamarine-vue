@@ -57,7 +57,7 @@ export default {
 }
 .shadule-list .shadule-title h2 {
   font-size: 20px;
-  color: blue;
+  color: #000;
 }
 .list-items ul li {
   display: flex;
