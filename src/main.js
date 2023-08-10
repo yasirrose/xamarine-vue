@@ -53,7 +53,7 @@ const routes = [
         component: ViewAppointments,
       },
       {
-        path: "/admin/schedule",
+        path: "/admin/schedule/:id",
         component: Schedule,
       },
       {
@@ -104,6 +104,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
 
 const app = createApp(App)
 
