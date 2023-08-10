@@ -1,7 +1,14 @@
 export default {
   template: `
         <span>
-            <button class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" @click="btnClickedHandler()">View</button>
+          <v-btn
+            class="text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-1"
+            color="#5865f2"
+            size="small"
+            variant="flat"
+            @click="btnClickedHandler()">
+            View
+          </v-btn>
         </span>
     `,
   methods: {
