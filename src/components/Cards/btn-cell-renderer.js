@@ -13,7 +13,7 @@ export default {
     `,
   methods: {
     btnClickedHandler() {
-      this.$router.push(`/admin/schedule/${this.params.node.data.id }`)
+      this.$router.push({ path: `/admin/schedule/${this.params.node.data.id}`, query: {details: JSON.stringify(this.params.node.data) }})
     }
   }
 }

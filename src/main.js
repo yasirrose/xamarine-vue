@@ -71,7 +71,9 @@ const routes = [
       },
       {
         path: "/admin/schedule/:id",
+        name: "Schedule",
         component: Schedule,
+        props: true
       },
       {
         path: "/admin/createsurvey",

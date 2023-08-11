@@ -27,6 +27,7 @@
     "cors": "^2.8.5",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
+    "pinia": "^2.1.6",
     "tailwindcss": "2.0.4",
     "vue": "^3.0.7",
     "vue-router": "4.0.5",

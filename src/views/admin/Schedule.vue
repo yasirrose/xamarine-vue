@@ -9,23 +9,23 @@
           <tbody>
             <tr>
               <td>Description</td>
-              <td>This albo ought to appear tomorrow</td>
+              <td>{{ data.event_description }}</td>
             </tr>
             <tr>
               <td>Date</td>
-              <td><strong>9/1/2021</strong></td>
+              <td><strong>{{ data.created_at }}</strong></td>
             </tr>
             <tr>
               <td>Start Time</td>
-              <td><strong>4:30 AM</strong></td>
+              <td><strong>{{ data.event_date_start }}</strong></td>
             </tr>
             <tr>
               <td>End Time</td>
-              <td><strong>5: 30 AM</strong></td>
+              <td><strong>{{ data.event_date_end }}</strong></td>
             </tr>
             <tr>
-              <td>Referance Code</td>
-              <td><strong>12341234</strong></td>
+              <td>Reference Code</td>
+              <td><strong>{{ data.reference_number }}</strong></td>
             </tr>
             <tr class="highlighted">
               <td><strong>Doctor, Best</strong></td>
@@ -45,9 +45,19 @@
 // import CardProfile from "@/components/Cards/CardProfile.vue";
 
 export default {
+  props: ['details'],
   components: {
     // CardProfile,
   },
+  data() {
+    return { 
+      data: {}
+    }
+  },
+  mounted() {
+    this.data = JSON.parse(this.$route.query.details);
+    console.log(JSON.parse(this.$route.query.details));
+  }
 };
 </script>
 
