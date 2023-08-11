@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import { createWebHistory, createRouter } from "vue-router";
 import VueSweetalert2 from 'vue-sweetalert2';
+import moment from 'moment'
 // styles
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -131,6 +132,8 @@ const router = createRouter({
 
 const app = createApp(App)
 
+
+
 app.use(router);
 
 app.use(VueSweetalert2);
@@ -138,3 +141,16 @@ app.use(VueSweetalert2);
 app.use(vuetify);
 
 app.mount('#app');
+
+app.config.globalProperties.$filters = {
+  dateFormat(value) {
+    if (value) {
+      return moment(String(value)).format('MM/DD/YYYY')
+    }
+  },
+  getTime(value) {
+    if (value) {
+      return moment(String(value)).format("hh:mm a")
+    }
+  }
+}

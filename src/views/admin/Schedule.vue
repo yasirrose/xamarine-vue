@@ -13,15 +13,15 @@
             </tr>
             <tr>
               <td>Date</td>
-              <td><strong>{{ data.created_at }}</strong></td>
+              <td><strong>{{ $filters.dateFormat(data.created_at) }}</strong></td>
             </tr>
             <tr>
               <td>Start Time</td>
-              <td><strong>{{ data.event_date_start }}</strong></td>
+              <td><strong>{{ $filters.getTime(data.event_date_start) }}</strong></td>
             </tr>
             <tr>
               <td>End Time</td>
-              <td><strong>{{ data.event_date_end }}</strong></td>
+              <td><strong>{{ $filters.getTime(data.event_date_end) }}</strong></td>
             </tr>
             <tr>
               <td>Reference Code</td>
