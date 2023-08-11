@@ -1,7 +1,20 @@
 <template>
   <div class="appointments-sec">
     <v-card>
-      <template v-slot:title> Appointments </template>
+      <template v-slot:title>
+        <div class="w-full clearfix">
+          <div class="float-left">Appointments</div>
+          <div class="float-right">
+            <v-btn
+                class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-1"
+                size="small"
+                @click="addNewAppointment()">
+                Add New
+            </v-btn>
+          </div>
+        </div>
+
+      </template>
 
       <template v-slot:text>
         <ag-grid-vue
@@ -31,9 +44,7 @@ export default {
       columnDefs: [
         { headerName: "id", field: "id", hide: true },
         { headerName: "Description", field: "event_description", width: "540px"},
-        { headerName: "created_at", field: "created_at", dataType: 'DateTime', valueFormatter: (params) => this.dateFormat(params), },
-        // { headerName: "Start Time", field: "starttime" },
-        // { headerName: "End Time", field: "endtime" },
+        { headerName: "created_at", field: "created_at", dataType: 'DateTime', valueFormatter: (params) => this.$filters.stringToDate(params), },
         { headerName: "Reference Code", field: "reference_number" },
         {
           headerName: "Action",
@@ -47,116 +58,6 @@ export default {
         },
       ],
       rowData: [],
-    //   rowData: [
-    //     {
-    //       id: 1,
-    //       description: "This albo ought to appear tomorrow",
-    //       created_at: "9/1/2021",
-    //       starttime: "4:30 AM",
-    //       endtime: "5: 30 AM",
-    //       slug: 12341234,
-    //       action: "Action",
-    //     },
-    //     {
-    //       id: 1,
-    //       description: "This albo ought to appear tomorrow",
-    //       created_at: "9/1/2021",
-    //       starttime: "4:30 AM",
-    //       endtime: "5: 30 AM",
-    //       slug: 12341234,
-    //       action: "Action",
-    //     },
-    //     {
-    //       id: 1,
-    //       description: "This albo ought to appear tomorrow",
-    //       created_at: "9/1/2021",
-    //       starttime: "4:30 AM",
-    //       endtime: "5: 30 AM",
-    //       slug: 12341234,
-    //       action: "Action",
-    //     },
-    //     {
-    //       id: 1,
-    //       description: "This albo ought to appear tomorrow",
-    //       created_at: "9/1/2021",
-    //       starttime: "4:30 AM",
-    //       endtime: "5: 30 AM",
-    //       slug: 12341234,
-    //       action: "Action",
-    //     },
-    //     {
-    //       id: 1,
-    //       description: "This albo ought to appear tomorrow",
-    //       created_at: "9/1/2021",
-    //       starttime: "4:30 AM",
-    //       endtime: "5: 30 AM",
-    //       slug: 12341234,
-    //       action: "Action",
-    //     },
-    //     {
-    //       id: 1,
-    //       description: "This albo ought to appear tomorrow",
-    //       created_at: "9/1/2021",
-    //       starttime: "4:30 AM",
-    //       endtime: "5: 30 AM",
-    //       slug: 12341234,
-    //       action: "Action",
-    //     },
-    //     {
-    //       id: 1,
-    //       description: "This albo ought to appear tomorrow",
-    //       created_at: "9/1/2021",
-    //       starttime: "4:30 AM",
-    //       endtime: "5: 30 AM",
-    //       slug: 12341234,
-    //       action: "Action",
-    //     },
-    //     {
-    //       id: 1,
-    //       description: "This albo ought to appear tomorrow",
-    //       created_at: "9/1/2021",
-    //       starttime: "4:30 AM",
-    //       endtime: "5: 30 AM",
-    //       slug: 12341234,
-    //       action: "Action",
-    //     },
-    //     {
-    //       id: 1,
-    //       description: "This albo ought to appear tomorrow",
-    //       created_at: "9/1/2021",
-    //       starttime: "4:30 AM",
-    //       endtime: "5: 30 AM",
-    //       slug: 12341234,
-    //       action: "Action",
-    //     },
-    //     {
-    //       id: 1,
-    //       description: "This albo ought to appear tomorrow",
-    //       created_at: "9/1/2021",
-    //       starttime: "4:30 AM",
-    //       endtime: "5: 30 AM",
-    //       slug: 12341234,
-    //       action: "Action",
-    //     },
-    //     {
-    //       id: 1,
-    //       description: "This albo ought to appear tomorrow",
-    //       created_at: "9/1/2021",
-    //       starttime: "4:30 AM",
-    //       endtime: "5: 30 AM",
-    //       slug: 12341234,
-    //       action: "Action",
-    //     },
-    //     {
-    //       id: 1,
-    //       description: "This albo ought to appear tomorrow",
-    //       created_at: "9/1/2021",
-    //       starttime: "4:30 AM",
-    //       endtime: "5: 30 AM",
-    //       slug: 12341234,
-    //       action: "Action",
-    //     },
-    //   ],
     };
   },
   props: {
@@ -168,12 +69,8 @@ export default {
     },
   },
   methods: {
-    dateFormat: function (params) {
-        var date = new Date(params.value);
-        var day = date.getDate().toString().padStart(2, '0');
-        var month = (date.getMonth() + 1).toString().padStart(2, '0');
-        var year = date.getFullYear().toString().substring(2);
-        return day + '/' + month + '/' + year;
+    addNewAppointment() {
+      this.$router.push('/admin/create-appointment');
     }
   },
   mounted() {

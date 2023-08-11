@@ -23,7 +23,7 @@ import Dashboard from "@/views/admin/Dashboard.vue";
 import ViewAppointments from "@/views/admin/ViewAppointments.vue";
 import CreateSurvey from "@/views/admin/CreateSurvey.vue";
 import Schedule from "@/views/admin/Schedule.vue";
-import CreatAppoinment from "@/views/admin/CreatAppoinment.vue";
+import CreateAppointment from "@/views/admin/CreateAppointment.vue";
 import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
 import Maps from "@/views/admin/Maps.vue";
@@ -67,8 +67,8 @@ const routes = [
         component: ViewAppointments,
       },
       {
-        path: "/admin/CreatAppoinment",
-        component: CreatAppoinment,
+        path: "/admin/create-appointment",
+        component: CreateAppointment,
       },
       {
         path: "/admin/schedule/:id",
@@ -77,7 +77,7 @@ const routes = [
         props: true
       },
       {
-        path: "/admin/createsurvey",
+        path: "/admin/create-survey",
         component: CreateSurvey,
       },
       {
@@ -129,10 +129,7 @@ const router = createRouter({
   routes,
 });
 
-
 const app = createApp(App)
-
-
 
 app.use(router);
 
@@ -151,6 +148,15 @@ app.config.globalProperties.$filters = {
   getTime(value) {
     if (value) {
       return moment(String(value)).format("hh:mm a")
+    }
+  },
+  stringToDate(params) {
+    if (params) {
+      var date = new Date(params.value);
+      var day = date.getDate().toString().padStart(2, '0');
+      var month = (date.getMonth() + 1).toString().padStart(2, '0');
+      var year = date.getFullYear().toString().substring(2);
+      return day + '/' + month + '/' + year;
     }
   }
 }
