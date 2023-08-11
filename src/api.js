@@ -107,7 +107,18 @@ const API = {
                 errorCB(err.response)
             })
     },
-
+    getAppointments(cb, errorCB) {
+        axios
+            .get(API_URL + 'event')
+            .then(resp => {
+                // if (resp.status == 200) {
+                    cb(resp.data)
+                // }
+            })
+            .catch(err => {
+                errorCB(err.response)
+            })
+    },
     checkEmail(data, cb, errorCB) {
         axios
             .post(API_URL + 'sendResetPasswordEmail', data)

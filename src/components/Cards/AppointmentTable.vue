@@ -30,11 +30,11 @@ export default {
     return {
       columnDefs: [
         { headerName: "id", field: "id", hide: true },
-        { headerName: "Description", field: "description", width: "540px"},
+        { headerName: "Description", field: "event_description", width: "540px"},
         { headerName: "created_at", field: "created_at", dataType: 'DateTime', valueFormatter: (params) => this.dateFormat(params), },
         // { headerName: "Start Time", field: "starttime" },
         // { headerName: "End Time", field: "endtime" },
-        { headerName: "Reference Code", field: "slug" },
+        { headerName: "Reference Code", field: "reference_number" },
         {
           headerName: "Action",
           field: "action",
