@@ -11,7 +11,7 @@
           <div class="survey-content">
               <div class="toggle-sec">
                 <p>Enabled</p>
-                <ToggleSlider />
+                <!-- <ToggleSlider /> -->
               </div>
               <ul>
                   <li><p>Body parts: Any Body Part <a href="#">Change</a></p></li>
@@ -30,13 +30,13 @@
 </template>
 <script>
 
-import ToggleSlider from "@/components/ToggleSlider.vue";
+// import ToggleSlider from "@/components/ToggleSlider.vue";
 import QuestionAnswerComponent from "@/components/QuestionAnswerComponent.vue";
 
 
 export default {
   components: {
-    ToggleSlider,
+    // ToggleSlider,
     QuestionAnswerComponent
   },
 };

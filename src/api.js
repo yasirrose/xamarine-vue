@@ -33,8 +33,8 @@ window.axios = axios
 axios.defaults.headers.common['Accept'] = '*/*'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-// axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE'
-// axios.defaults.headers.common['Access-Control-Allow-Credentials'] = true
+axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE'
+axios.defaults.headers.common['Access-Control-Allow-Credentials'] = true
 // axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, Content-Type, X-Auth-Token'
 // axios.defaults.headers.common['Host'] = process.env.VUE_APP_ENDPOINT
 
@@ -119,9 +119,21 @@ const API = {
                 errorCB(err.response)
             })
     },
-    checkEmail(data, cb, errorCB) {
+    getUsers(cb, errorCB) {
         axios
-            .post(API_URL + 'sendResetPasswordEmail', data)
+            .get(API_URL + 'view_users')
+            .then(resp => {
+                // if (resp.status == 200) {
+                    cb(resp.data)
+                // }
+            })
+            .catch(err => {
+                errorCB(err.response)
+            })
+    },
+    saveAppointment(data, cb, errorCB) {
+        axios
+            .post(API_URL + 'saveAppointment', data)
             .then(resp => {
                 cb(resp.data)
             })

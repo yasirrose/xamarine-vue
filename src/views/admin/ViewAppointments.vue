@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap">
+  <div class="flex flex-wrap h-screen">
     <div class="w-full lg:w-12/12 px-4">
       <appointment-table />
     </div>

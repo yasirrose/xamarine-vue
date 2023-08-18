@@ -2,6 +2,10 @@ import { createApp } from "vue";
 import { createWebHistory, createRouter } from "vue-router";
 import VueSweetalert2 from 'vue-sweetalert2';
 import moment from 'moment'
+import { VueSignaturePad } from "vue-signature-pad";
+import Toggle from '@vueform/toggle'
+// import { createPinia } from 'pinia';
+// import { useAuthStore } from '@/stores';
 // styles
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -24,6 +28,13 @@ import ViewAppointments from "@/views/admin/ViewAppointments.vue";
 import CreateSurvey from "@/views/admin/CreateSurvey.vue";
 import Schedule from "@/views/admin/Schedule.vue";
 import CreateAppointment from "@/views/admin/CreateAppointment.vue";
+import PatientPin from "@/views/admin/PatientPin.vue";
+import PatientInputPin from "@/views/admin/PatientInputPin.vue";
+import Disclaimer from "@/views/admin/Disclaimer.vue";
+import FemaleImage from "@/views/admin/FemaleImage.vue";
+import SessionComplete from "@/views/admin/SessionComplete.vue";
+import MaleImage from "@/views/admin/MaleImage.vue";
+import Signature from "@/views/admin/Signature.vue";
 import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
 import Maps from "@/views/admin/Maps.vue";
@@ -50,6 +61,7 @@ const vuetify = createVuetify({
   directives,
 })
 
+// const pinia = createPinia()
 // routes
 
 const routes = [
@@ -67,8 +79,36 @@ const routes = [
         component: ViewAppointments,
       },
       {
+        path: "/admin/patient-pin",
+        component: PatientPin,
+      },
+      {
+        path: "/patient/enter-pin",
+        component: PatientInputPin,
+      },
+      {
+        path: "/patient/disclaimer",
+        component: Disclaimer,
+      },
+      {
         path: "/admin/create-appointment",
         component: CreateAppointment,
+      },
+      {
+        path: "/admin/female-image",
+        component: FemaleImage,
+      },
+      {
+        path: "/admin/male-image",
+        component: MaleImage,
+      },
+      {
+        path: "/admin/session-complete",
+        component: SessionComplete,
+      },
+      {
+        path: "/admin/signature",
+        component: Signature,
       },
       {
         path: "/admin/schedule/:id",
@@ -129,6 +169,18 @@ const router = createRouter({
   routes,
 });
 
+// router.beforeEach(async (to) => {
+//   // redirect to login page if not logged in and trying to access a restricted page
+//   const publicPages = ['/auth/login'];
+//   const authRequired = !publicPages.includes(to.path);
+//   const auth = useAuthStore();
+
+//   if (authRequired && !auth.user) {
+//     // auth.returnUrl = to.fullPath;
+//     return '/auth/login';
+//   }
+// });
+
 const app = createApp(App)
 
 app.use(router);
@@ -136,6 +188,12 @@ app.use(router);
 app.use(VueSweetalert2);
 
 app.use(vuetify);
+
+// app.use(pinia);
+
+app.component("VueSignaturePad", VueSignaturePad);
+
+app.component("Toggle", Toggle);
 
 app.mount('#app');
 
