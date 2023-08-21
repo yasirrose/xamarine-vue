@@ -117,7 +117,7 @@ const routes = [
         props: true
       },
       {
-        path: "/admin/create-survey",
+        path: "/admin/add-survey",
         component: CreateSurvey,
       },
       {

@@ -124,8 +124,8 @@ export default {
     return {
     //   github,
     //   google,
-      email: '',
-      password: '',
+      email: 'account@voilamed.com',
+      password: '123456',
       rememberMe: false,
     };
   },

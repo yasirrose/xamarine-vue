@@ -4,7 +4,7 @@
             <v-card>
                 <template v-slot:title>
                     <div class="w-full clearfix">
-                        <div class="text-center">Survey Selection</div>
+                        <div class="">Survey Selection</div>
                         <!-- <div class="float-right">
                             <v-btn
                                 class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-1"
@@ -17,11 +17,14 @@
                 </template>
 
                 <template v-slot:text>
-                    <form class="w-full max-w-lg" @submit.prevent="onSubmit">
+                    <form class="w-full max-w-lg mt-4" @submit.prevent="onSubmit">
                         <div class="flex flex-wrap -mx-3 mb-6 float-center text-center">
-                            <div class="w-full md:w-1/2 px-3 mb-12 md:mb-0 text-center float-center">
+                            <div class="md:w-1/2 px-3 mb-12 md:mb-0 text-center float-center">
                                 <!-- <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white text-center mb-3" v-model="form.pin" id="grid-first-name" type="text"> -->
                                 <img src="../../../public/Resources/wholeMale.png" alt="Female" width="500" height="400">
+                            </div>
+                            <div class="md:w-1/2 px-3 mb-12 md:mb-0 text-center float-center">
+                                <ImageMenu />
                             </div>
                         </div>
                         <div class="float-right">
@@ -39,10 +42,12 @@
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+import ImageMenu  from './ImageMenu'
 import API from '@/api'
 
 export default {
     components: {
+        ImageMenu
     },
     setup() {
         return { v$: useVuelidate() }

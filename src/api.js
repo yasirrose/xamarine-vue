@@ -25,16 +25,19 @@ window.axios = axios
 //     baseURL: 'https://external-server.com',
 //     headers: {
 //       'Content-Type': process.env.VUE_APP_ENDPOINT,
-//       'Access-Control-Allow-Origin': "http://localhost:8081",
+//       'Access-Control-Allow-Origin': "*",
 //       'Host': process.env.VUE_APP_ENDPOINT,
 //       'Accept': '*/*'
 //     },
 //   });
-axios.defaults.headers.common['Accept'] = '*/*'
-axios.defaults.headers.common['Content-Type'] = 'application/json'
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE'
-axios.defaults.headers.common['Access-Control-Allow-Credentials'] = true
+axios.defaults.headers.post['Accept'] = '*/*'
+axios.defaults.headers.post['Content-Type'] = 'application/json'
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
+axios.defaults.headers.post['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE'
+axios.defaults.headers.post['Access-Control-Allow-Credentials'] = true
+axios.defaults.headers.post['Access-Control-Allow-Headers'] = 'Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization'
+axios.defaults.headers.post['Access-Control-Allow-Headers'] = '*'
+axios.defaults.headers.post['Host'] = process.env.VUE_APP_ENDPOINT
 // axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, Content-Type, X-Auth-Token'
 // axios.defaults.headers.common['Host'] = process.env.VUE_APP_ENDPOINT
 
