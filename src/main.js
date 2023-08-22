@@ -4,6 +4,8 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import moment from 'moment'
 import { VueSignaturePad } from "vue-signature-pad";
 import Toggle from '@vueform/toggle'
+import PinchScrollZoom from '@coddicat/vue-pinch-scroll-zoom';
+
 // import { createPinia } from 'pinia';
 // import { useAuthStore } from '@/stores';
 // styles
@@ -11,6 +13,7 @@ import Toggle from '@vueform/toggle'
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@/assets/styles/tailwind.css";
 import 'sweetalert2/dist/sweetalert2.min.css';
+import '@coddicat/vue-pinch-scroll-zoom/style.css';
 
 // mouting point for the whole app
 
@@ -194,6 +197,8 @@ app.use(vuetify);
 app.component("VueSignaturePad", VueSignaturePad);
 
 app.component("Toggle", Toggle);
+
+app.component("PinchScrollZoom", PinchScrollZoom);
 
 app.mount('#app');
 

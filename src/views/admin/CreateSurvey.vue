@@ -18,7 +18,7 @@
 
                 <template v-slot:text>
                     <form class="w-full max-w-lg" @submit.prevent="onSubmit">
-                        <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="flex flex-wrap -mx-3 mb-3">
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-survey-title">
                                     Survey Title
@@ -75,6 +75,12 @@
                                 </div>
                             </div>
                         </div> -->
+                        <div class="flex flex-wrap -mx-3 mb-2 px-3 toggle-sec items-center items-end">
+                            <p>Body Part: Any Body Part</p>
+                            <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs ml-2" size="small" @click="changeBodyType">
+                                Change
+                            </v-btn>
+                        </div>
                         <div class="flex flex-wrap -mx-3 mb-2 px-3 toggle-sec">
                             <p>Status</p>
                             <Toggle v-model="form.isSurveyEvent" />
@@ -191,10 +197,11 @@ export default {
         async submit() {
             const result = await this.v$.$validate()
             if (result) {
-                // notify user form is invalid
                 this.saveAppointment()
             } else return
-            // perform async actions
+        },
+        changeBodyType() {
+            console.log('changeBodyType');
         }
     }
 };
@@ -259,6 +266,12 @@ table td {
 .survey-time .date-field {
     margin-right: 10px;
     width: 20%;
+}
+.toggle-sec {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
 }
 </style>
 
