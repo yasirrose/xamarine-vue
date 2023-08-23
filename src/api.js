@@ -144,14 +144,24 @@ const API = {
                 errorCB(err.response.data)
             })
     },
-    add_edit_client(data, cb, errorCB) {
+    getSurveys(cb, errorCB) {
         axios
-            .post(API_URL + 'add_edit_client', data)
+            .get(API_URL + 'questionaire')
             .then(resp => {
                 cb(resp.data)
             })
             .catch(err => {
-                errorCB(err.response.data)
+                errorCB(err.response)
+            })
+    },
+    getSurvey(id, cb, errorCB) {
+        axios
+            .get(API_URL + 'questionaire/' + id)
+            .then(resp => {
+                cb(resp.data)
+            })
+            .catch(err => {
+                errorCB(err.response)
             })
     },
     deleteclient(data, cb, errorCB) {

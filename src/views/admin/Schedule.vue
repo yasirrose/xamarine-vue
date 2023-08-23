@@ -36,6 +36,12 @@
               <td>Patient</td>
             </tr>
           </tbody>
+          <v-btn
+                class="bg-green text-none text-white font-bold font-bold uppercase text-xs m-4 float-right"
+                size="small"
+                @click="presentToPatient()">
+                Present To Patient
+            </v-btn>
         </v-table>
       </v-card>
     </div>
@@ -57,7 +63,12 @@ export default {
   mounted() {
     this.data = JSON.parse(this.$route.query.details);
     console.log(JSON.parse(this.$route.query.details));
-  }
+  },
+  methods: {
+    presentToPatient() {
+      this.$router.push({ path: `/admin/patient-pin`})
+    }
+}
 };
 </script>
 

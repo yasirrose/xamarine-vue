@@ -44,7 +44,7 @@ export default {
       columnDefs: [
         { headerName: "id", field: "id", hide: true },
         { headerName: "Description", field: "event_description", width: "540px"},
-        { headerName: "created_at", field: "created_at", dataType: 'DateTime', valueFormatter: (params) => this.$filters.stringToDate(params), },
+        { headerName: "Created At", field: "created_at", dataType: 'DateTime', valueFormatter: (params) => this.$filters.stringToDate(params), },
         { headerName: "Reference Code", field: "reference_number" },
         {
           headerName: "Action",
