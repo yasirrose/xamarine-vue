@@ -19,7 +19,7 @@
             <li><a href="#">Card Design</a></li>
             <li class="more">
               <span><a href="#">More</a>
-                <img src="../../../public/Iconsax/Svg/Category/Arrow/vuesax/linear/arrow-right.svg" class='bx bxs-chevron-right arrow more-arrow logo'>
+                <!-- <img src="../../../public/Iconsax/Svg/Category/Arrow/vuesax/linear/arrow-right.svg" class='bx bxs-chevron-right arrow more-arrow logo'> -->
               </span>
               <ul class="more-sub-menu sub-menu bg-purple-darken-4">
                 <li><a href="#">Neumorphism</a></li>

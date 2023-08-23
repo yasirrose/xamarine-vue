@@ -29,6 +29,7 @@ import Auth from "@/layouts/Auth.vue";
 import Dashboard from "@/views/admin/Dashboard.vue";
 import ViewAppointments from "@/views/admin/ViewAppointments.vue";
 import CreateSurvey from "@/views/admin/CreateSurvey.vue";
+import ViewSurveys from "@/views/admin/ViewSurveys.vue";
 import Schedule from "@/views/admin/Schedule.vue";
 import CreateAppointment from "@/views/admin/CreateAppointment.vue";
 import PatientPin from "@/views/admin/PatientPin.vue";
@@ -120,7 +121,11 @@ const routes = [
         props: true
       },
       {
-        path: "/admin/add-survey",
+        path: "/admin/view-surveys",
+        component: ViewSurveys,
+      },
+      {
+        path: "/admin/create-survey",
         component: CreateSurvey,
       },
       {
