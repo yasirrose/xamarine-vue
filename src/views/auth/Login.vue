@@ -114,15 +114,18 @@
 <script>
 // import github from "@/assets/img/github.svg";
 // import google from "@/assets/img/google.svg";
+// import { useAuthStore } from '@/stores';
 import API from '@/api'
+
+// const auth = useAuthStore();
 
 export default {
   data() {
     return {
     //   github,
     //   google,
-      email: '',
-      password: '',
+      email: 'account@voilamed.com',
+      password: '123456',
       rememberMe: false,
     };
   },
@@ -147,8 +150,9 @@ export default {
             data => {
                 console.log(data)
                     if (data.id) {
-                        localStorage.setItem('id', data.id)
-                        localStorage.setItem('loginEmail', data.email)
+                        // localStorage.setItem('loginEmail', data.email)
+                        // auth.user = data.email;
+                        localStorage.setItem('users', JSON.stringify(data))
                         this.$router.push("/admin/dashboard");
                     } else {
                         this.$swal({

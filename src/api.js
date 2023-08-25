@@ -25,16 +25,19 @@ window.axios = axios
 //     baseURL: 'https://external-server.com',
 //     headers: {
 //       'Content-Type': process.env.VUE_APP_ENDPOINT,
-//       'Access-Control-Allow-Origin': "http://localhost:8081",
+//       'Access-Control-Allow-Origin': "*",
 //       'Host': process.env.VUE_APP_ENDPOINT,
 //       'Accept': '*/*'
 //     },
 //   });
-axios.defaults.headers.common['Accept'] = '*/*'
-axios.defaults.headers.common['Content-Type'] = 'application/json'
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-// axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE'
-// axios.defaults.headers.common['Access-Control-Allow-Credentials'] = true
+axios.defaults.headers.post['Accept'] = '*/*'
+axios.defaults.headers.post['Content-Type'] = 'application/json'
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
+axios.defaults.headers.post['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE'
+axios.defaults.headers.post['Access-Control-Allow-Credentials'] = true
+axios.defaults.headers.post['Access-Control-Allow-Headers'] = 'Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization'
+axios.defaults.headers.post['Access-Control-Allow-Headers'] = '*'
+axios.defaults.headers.post['Host'] = process.env.VUE_APP_ENDPOINT
 // axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, Content-Type, X-Auth-Token'
 // axios.defaults.headers.common['Host'] = process.env.VUE_APP_ENDPOINT
 
@@ -107,10 +110,33 @@ const API = {
                 errorCB(err.response)
             })
     },
-
-    checkEmail(data, cb, errorCB) {
+    getAppointments(cb, errorCB) {
         axios
-            .post(API_URL + 'sendResetPasswordEmail', data)
+            .get(API_URL + 'event')
+            .then(resp => {
+                // if (resp.status == 200) {
+                    cb(resp.data)
+                // }
+            })
+            .catch(err => {
+                errorCB(err.response)
+            })
+    },
+    getUsers(cb, errorCB) {
+        axios
+            .get(API_URL + 'view_users')
+            .then(resp => {
+                // if (resp.status == 200) {
+                    cb(resp.data)
+                // }
+            })
+            .catch(err => {
+                errorCB(err.response)
+            })
+    },
+    saveAppointment(data, cb, errorCB) {
+        axios
+            .post(API_URL + 'saveAppointment', data)
             .then(resp => {
                 cb(resp.data)
             })
@@ -118,14 +144,24 @@ const API = {
                 errorCB(err.response.data)
             })
     },
-    add_edit_client(data, cb, errorCB) {
+    getSurveys(cb, errorCB) {
         axios
-            .post(API_URL + 'add_edit_client', data)
+            .get(API_URL + 'questionaire')
             .then(resp => {
                 cb(resp.data)
             })
             .catch(err => {
-                errorCB(err.response.data)
+                errorCB(err.response)
+            })
+    },
+    getSurvey(id, cb, errorCB) {
+        axios
+            .get(API_URL + 'questionaire/' + id)
+            .then(resp => {
+                cb(resp.data)
+            })
+            .catch(err => {
+                errorCB(err.response)
             })
     },
     deleteclient(data, cb, errorCB) {

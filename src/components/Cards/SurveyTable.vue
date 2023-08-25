@@ -3,12 +3,12 @@
     <v-card>
       <template v-slot:title>
         <div class="w-full clearfix">
-          <div class="float-left">Appointments</div>
+          <div class="float-left">Surveys</div>
           <div class="float-right">
             <v-btn
                 class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-1"
                 size="small"
-                @click="addNewAppointment()">
+                @click="addNewSurvey()">
                 Add New
             </v-btn>
           </div>
@@ -31,25 +31,27 @@
 <script>
 /* eslint-disable vue/no-unused-components */
 import { AgGridVue } from "ag-grid-vue3";
-import BtnCellRenderer from "./btn-cell-renderer.js";
+import BtnViewSurvey from "./btn-view-survey.js";
 import API from '@/api'
 
 export default {
   components: {
-    btnCellRenderer: BtnCellRenderer,
+    BtnViewSurvey: BtnViewSurvey,
     AgGridVue,
   },
   data() {
     return {
       columnDefs: [
         { headerName: "id", field: "id", hide: true },
-        { headerName: "Description", field: "event_description", width: "540px"},
+        { headerName: "Display Name", field: "displayname"},
+        // { headerName: "Slug", field: "slug"},
+        { headerName: "Body Parts", field: "bodyparts"},
+        { headerName: "Description", field: "description", width: "350px"},
         { headerName: "Created At", field: "created_at", dataType: 'DateTime', valueFormatter: (params) => this.$filters.stringToDate(params), },
-        { headerName: "Reference Code", field: "reference_number" },
         {
           headerName: "Action",
           field: "action",
-          cellRenderer: "btnCellRenderer",
+          cellRenderer: "BtnViewSurvey",
           cellRendererParams: {
             clicked: function (field) {
               alert(`${field} was clicked`);
@@ -69,12 +71,12 @@ export default {
     },
   },
   methods: {
-    addNewAppointment() {
-      this.$router.push('/admin/create-appointment');
+    addNewSurvey() {
+      this.$router.push('/admin/create-survey');
     }
   },
   mounted() {
-    API.getAppointments(
+    API.getSurveys(
         data => {
             console.log(data)
             if (data.length > 0) {

@@ -4,7 +4,7 @@
             <v-card>
                 <template v-slot:title>
                     <div class="w-full clearfix">
-                        <div class="float-left">Add New Survey</div>
+                        <div class="float-left">Add New Appointment</div>
                         <div class="float-right">
                             <v-btn
                                 class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-1"
@@ -18,17 +18,17 @@
 
                 <template v-slot:text>
                     <form class="w-full max-w-lg" @submit.prevent="onSubmit">
-                        <div class="flex flex-wrap -mx-3 mb-3">
+                        <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-survey-title">
-                                    Survey Title
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                                    Event Name
                                 </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white" v-model="form.surveyTitle" id="grid-survey-title" type="text" placeholder="Enter Survey Title">
-                                <div class="input-errors" v-for="(error, index) of v$.form.surveyTitle.$errors" :key="index">
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white" v-model="form.eventName" id="grid-first-name" type="text" placeholder="Enter Event Name">
+                                <div class="input-errors" v-for="(error, index) of v$.form.eventName.$errors" :key="index">
                                     <div class="text-red-500 text-xs italic">{{ error.$message }}</div>
                                 </div>
                             </div>
-                            <!-- <div class="w-full md:w-1/2 px-3">
+                            <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                                     Event Slug
                                 </label>
@@ -36,9 +36,9 @@
                                 <div class="input-errors" v-for="(error, index) of v$.form.eventSlug.$errors" :key="index">
                                     <div class="text-red-500 text-xs italic">{{ error.$message }}</div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
-                        <!-- <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
                                     Event Description
@@ -48,8 +48,8 @@
                                     <div class="text-red-500 text-xs italic">{{ error.$message }}</div>
                                 </div>
                             </div>
-                        </div> -->
-                        <!-- <div class="flex flex-wrap -mx-3 mb-6">
+                        </div>
+                        <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
                                     Start Time
@@ -74,20 +74,26 @@
                                     <div class="text-red-500 text-xs italic">{{ error.$message }}</div>
                                 </div>
                             </div>
-                        </div> -->
-                        <div class="flex flex-wrap -mx-3 mb-2 px-3 toggle-sec items-center items-end">
-                            <p>Body Part: Any Body Part</p>
-                            <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs ml-2" size="small" @click="changeBodyType">
-                                Change
-                            </v-btn>
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-2 px-3 toggle-sec">
-                            <p>Status</p>
+                            <p>Is this a survey event?</p>
                             <Toggle v-model="form.isSurveyEvent" />
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-2">
                             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                <QuestionAnswerComponent />
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+                                    Users
+                                </label>
+                                <div class="relative">
+                                    <multiselect v-model="form.participantUserIds" :options="users" valueProp="user" trackBy="user" label="email" mode="tags">
+                                    </multiselect>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                                    </div>
+                                </div>
+                                <div class="input-errors" v-for="(error, index) of v$.form.participantUserIds.$errors" :key="index">
+                                    <div class="text-red-500 text-xs italic">{{ error.$message }}</div>
+                                </div>
                             </div>
                         </div>
                         <div class="float-right">
@@ -103,21 +109,20 @@
 </template>
 
 <script>
-// import Datepicker from '@vuepic/vue-datepicker';
+import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
-// import Multiselect from '@vueform/multiselect'
+import Multiselect from '@vueform/multiselect'
 import useVuelidate from '@vuelidate/core'
 import Toggle from '@vueform/toggle'
 import { required, minLength } from '@vuelidate/validators'
-import QuestionAnswerComponent from "@/components/QuestionAnswerComponent.vue";
+
 import API from '@/api'
 
 export default {
     components: {
-        // Datepicker,
-        // Multiselect,
-        Toggle,
-        QuestionAnswerComponent
+        Datepicker,
+        Multiselect,
+        Toggle
     },
     setup() {
         return { v$: useVuelidate() }
@@ -127,7 +132,7 @@ export default {
             users: [],
             options: ['list', 'of', 'options'],
             form: {
-                surveyTitle: null,
+                eventName: null,
                 eventSlug: null,
                 eventDesc: null,
                 startDate: null,
@@ -140,7 +145,7 @@ export default {
     validations() {
         return {
             form: {
-                surveyTitle: {
+                eventName: {
                     required,
                 },
                 eventSlug: {
@@ -164,7 +169,7 @@ export default {
         }
     },
     mounted() {
-        // this.getUsers()
+        this.getUsers()
     },
     methods: {
         getUsers() {
@@ -197,11 +202,10 @@ export default {
         async submit() {
             const result = await this.v$.$validate()
             if (result) {
+                // notify user form is invalid
                 this.saveAppointment()
             } else return
-        },
-        changeBodyType() {
-            console.log('changeBodyType');
+            // perform async actions
         }
     }
 };
@@ -266,12 +270,6 @@ table td {
 .survey-time .date-field {
     margin-right: 10px;
     width: 20%;
-}
-.toggle-sec {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-bottom: 10px;
 }
 </style>
 
