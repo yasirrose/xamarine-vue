@@ -5,14 +5,6 @@
                 <template v-slot:title>
                     <div class="w-full clearfix">
                         <div class="">Survey Selection</div>
-                        <!-- <div class="float-right">
-                            <v-btn
-                                class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-1"
-                                size="small"
-                                @click="$router.go(-1)">
-                                Go Back
-                            </v-btn>
-                        </div> -->
                     </div>
                 </template>
 
@@ -40,7 +32,7 @@
                                 </PinchScrollZoom>
                             </div>
                             <div class="md:w-1/2 px-3 mb-12 md:mb-0 text-center float-center">
-                                <ImageMenu />
+                                <SurveyMenu />
                             </div>
                         </div>
                         <div class="float-right">
@@ -57,13 +49,13 @@
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import ImageMenu  from './ImageMenu'
+import SurveyMenu  from './SurveyMenu'
 import { required } from '@vuelidate/validators'
 import API from '@/api'
 
 export default {
     components: {
-        ImageMenu
+        SurveyMenu
     },
     setup() {
         return { v$: useVuelidate() }
