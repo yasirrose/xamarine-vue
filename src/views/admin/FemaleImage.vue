@@ -2,46 +2,38 @@
     <div class="flex flex-wrap h-screen">
         <div class="w-full lg:w-12/12 px-4">
             <v-card>
-                <template v-slot:title>
-                    <div class="w-full clearfix">
-                        <div class="">Survey Selection</div>
+                <form class="w-full max-w-lg mt-4" @submit.prevent="onSubmit">
+                    <div class="flex flex-wrap -mx-3 mb-6 float-center text-center">
+                        <div class="md:w-1/2 px-3 mb-12 md:mb-0 text-center float-center">
+                            <!-- <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white text-center mb-3" v-model="form.pin" id="grid-first-name" type="text"> -->
+                            <PinchScrollZoom
+                                ref="zoomer"
+                                :width="600"
+                                :height="850"
+                                within
+                                :min-scale="0.3"
+                                :max-scale="6"
+                                @scaling="e => onEvent('scaling', e)"
+                                @startDrag="e => onEvent('startDrag', e)"
+                                @stopDrag="e => onEvent('stopDrag', e)"
+                                @dragging="e => onEvent('dragging', e)"
+                                style="border: 1px solid black; background:#000"
+                                :content-width="1000"
+                                :content-height="1000"
+                            >
+                                <img src="../../../public/Resources/wholeFemale.png" alt="Female" width="500" height="400">
+                            </PinchScrollZoom>
+                        </div>
+                        <div class="md:w-1/2 px-3 mb-12 md:mb-0 text-center float-center">
+                            <SurveyMenu />
+                        </div>
                     </div>
-                </template>
-
-                <template v-slot:text>
-                    <form class="w-full max-w-lg mt-4" @submit.prevent="onSubmit">
-                        <div class="flex flex-wrap -mx-3 mb-6 float-center text-center">
-                            <div class="md:w-1/2 px-3 mb-12 md:mb-0 text-center float-center">
-                                <!-- <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white text-center mb-3" v-model="form.pin" id="grid-first-name" type="text"> -->
-                                <PinchScrollZoom
-                                    ref="zoomer"
-                                    :width="600"
-                                    :height="850"
-                                    within
-                                    :min-scale="0.3"
-                                    :max-scale="6"
-                                    @scaling="e => onEvent('scaling', e)"
-                                    @startDrag="e => onEvent('startDrag', e)"
-                                    @stopDrag="e => onEvent('stopDrag', e)"
-                                    @dragging="e => onEvent('dragging', e)"
-                                    style="border: 1px solid black; background:#000"
-                                    :content-width="1000"
-                                    :content-height="1000"
-                                >
-                                    <img src="../../../public/Resources/wholeFemale.png" alt="Female" width="500" height="400">
-                                </PinchScrollZoom>
-                            </div>
-                            <div class="md:w-1/2 px-3 mb-12 md:mb-0 text-center float-center">
-                                <SurveyMenu />
-                            </div>
-                        </div>
-                        <div class="float-right">
-                            <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-6" size="small" @click="submit">
-                                Continue
-                            </v-btn>
-                        </div>
-                    </form>
-                </template>
+                    <div class="float-right">
+                        <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-6" size="small" @click="submit">
+                            Continue
+                        </v-btn>
+                    </div>
+                </form>
             </v-card>
         </div>
     </div>
