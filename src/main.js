@@ -43,6 +43,7 @@ import Signature from "@/views/admin/Signature.vue";
 import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
 import Maps from "@/views/admin/Maps.vue";
+import GenderSelection from "@/views/admin/GenderSelection.vue";
 
 // views for Auth layout
 
@@ -106,6 +107,10 @@ const routes = [
       {
         path: "/admin/male-image",
         component: MaleImage,
+      },
+      {
+        path: "/admin/gender-selection",
+        component: GenderSelection,
       },
       {
         path: "/admin/session-complete",

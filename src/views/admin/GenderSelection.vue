@@ -4,23 +4,14 @@
             <v-card>
                 <template v-slot:title>
                     <div class="w-full clearfix">
-                        <!-- <div class="">Survey Selection</div> -->
-                        <!-- <div class="float-right">
-                            <v-btn
-                                class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-1"
-                                size="small"
-                                @click="$router.go(-1)">
-                                Go Back
-                            </v-btn>
-                        </div> -->
+                        <div class="">Survey Selection</div>
                     </div>
                 </template>
 
                 <template v-slot:text>
                     <form class="w-full max-w-lg mt-4" @submit.prevent="onSubmit">
-                        <div class="flex flex-wrap -mx-3 mb-6 float-center text-center">
+                        <!-- <div class="flex flex-wrap -mx-3 mb-6 float-center text-center">
                             <div class="md:w-1/2 px-3 mb-12 md:mb-0 text-center float-center">
-                                <!-- <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white text-center mb-3" v-model="form.pin" id="grid-first-name" type="text"> -->
                                 <PinchScrollZoom
                                     ref="zoomer"
                                     :width="600"
@@ -47,7 +38,43 @@
                             <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-6" size="small" @click="submit">
                                 Continue
                             </v-btn>
-                        </div>
+                        </div> -->
+                        <!-- <v-card> -->
+                        <v-tabs
+                            v-model="tab"
+                            color="deep-purple-accent-4"
+                            align-tabs="center"
+                            >
+                            <v-tab :value="1">Male</v-tab>
+                            <v-tab :value="2">Female</v-tab>
+                        </v-tabs>
+                        <v-window v-model="tab">
+                            <v-window-item>
+                                <v-container fluid>
+                                    <v-row>
+                                        <v-col cols="12" md="8">
+                                            <MaleImage />
+                                        </v-col>
+                                        <!-- <v-col cols="12" md="4">
+                                            <ImageMenu />
+                                        </v-col> -->
+                                    </v-row>
+                                </v-container>
+                            </v-window-item>
+                            <v-window-item>
+                                <v-container fluid>
+                                    <v-row>
+                                        <v-col cols="12" md="8">
+                                            <FemaleImage />
+                                        </v-col>
+                                        <!-- <v-col cols="12" md="4">
+                                            <ImageMenu />
+                                        </v-col> -->
+                                    </v-row>
+                                </v-container>
+                            </v-window-item>
+                        </v-window>
+                        <!-- </v-card> -->
                     </form>
                 </template>
             </v-card>
@@ -58,20 +85,24 @@
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import ImageMenu  from './ImageMenu'
+import MaleImage  from './MaleImage'
+import FemaleImage  from './FemaleImage'
+// import ImageMenu  from './ImageMenu'
 
 import API from '@/api'
 
 export default {
     components: {
-        ImageMenu,
+        // ImageMenu,
+        MaleImage,
+        FemaleImage
     },
     setup() {
         return { v$: useVuelidate() }
     },
     data() {
         return {
-            users: [],
+            tab: 2,
             options: ['list', 'of', 'options'],
             form: {
                 pin: null,

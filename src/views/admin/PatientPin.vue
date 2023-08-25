@@ -20,15 +20,16 @@
                     <form class="w-full max-w-lg" @submit.prevent="onSubmit">
                         <div class="flex flex-wrap -mx-3 mb-6 float-center" style="height:400px;vertically-align:middle">
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0 text-center">
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white text-center mb-3" v-model="form.pin" id="grid-first-name" type="text" placeholder="Enter Event Name">
                                 <div class="text-center">Send this pin to your patient and press continue</div>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white text-center mb-3" v-model="form.pin" id="grid-first-name" type="text" placeholder="Enter Event Name" :disabled="true">
+                                <span v-if="timer > 0">{{ timer }}</span>
                             </div>
                         </div>
-                        <!-- <div class="float-right">
-                            <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-6" size="small" :disabled="v$.form.$invalid" @click="submit">
-                                Next
+                        <div class="float-right">
+                            <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-6" size="small" :disabled="timer > 0" @click="goToEnterPin">
+                                Submit
                             </v-btn>
-                        </div> -->
+                        </div>
                     </form>
                 </template>
             </v-card>
@@ -38,7 +39,7 @@
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
+import { required, sameAs } from '@vuelidate/validators'
 import API from '@/api'
 
 export default {
@@ -47,13 +48,15 @@ export default {
     setup() {
         return { v$: useVuelidate() }
     },
+    computed: {},
     data() {
         return {
             users: [],
             options: ['list', 'of', 'options'],
+            timer: 10,
             form: {
-                pin:  Math.floor(Math.random()*90000) + 1000000,
-            }
+                pin:  Math.floor(Math.random()*900) + 1000,
+            },
         }
     },
     validations() {
@@ -63,9 +66,17 @@ export default {
                     required,
                 },
             },
+            timer: {
+                checked: sameAs(0)
+            }
         }
     },
     mounted() {
+        setInterval(() => {
+            if(this.timer > 0) {
+                this.counterHandler();
+            }
+        }, 1000)
         this.getUsers()
     },
     methods: {
@@ -86,24 +97,22 @@ export default {
             API.saveAppointment(
                 this.form,
                 data => {
-                    // console.log(data)
-                    // if (data.length > 0) {
-                        this.users = data;
-                    // }
+                    this.users = data;
                 },
                 err => {
                     console.log('err :', err);
                 }
             )
         },
-        async submit() {
+        async goToEnterPin() {
             const result = await this.v$.$validate()
             if (result) {
-                // notify user form is invalid
-                this.saveAppointment()
+                this.$router.push({ path: `/patient/enter-pin`})
             } else return
-            // perform async actions
-        }
+        },
+        counterHandler() {
+            this.timer--;
+        }   
     }
 };
 </script>

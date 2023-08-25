@@ -24,8 +24,12 @@
                                 <div class="text-left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
                             </div>
                         </div>
+                        <div class="flex flex-wrap -mx-3 mb-2 px-3 toggle-sec">
+                            <p>I have read the disclaimer above</p>
+                            <Toggle v-model="form.readDisclaimer" />
+                        </div>
                         <div class="float-right">
-                            <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-6" size="small" @click="submit">
+                            <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-6" size="small" :disabled="v$.form.$invalid" @click="submit">
                                 Continue
                             </v-btn>
                         </div>
@@ -38,8 +42,8 @@
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
-import API from '@/api'
+import { required, sameAs } from '@vuelidate/validators'
+// import API from '@/api'
 
 export default {
     components: {
@@ -49,60 +53,28 @@ export default {
     },
     data() {
         return {
-            users: [],
-            options: ['list', 'of', 'options'],
             form: {
-                pin: null,
+                readDisclaimer: false
             }
         }
     },
     validations() {
         return {
             form: {
-                pin: {
+                readDisclaimer: {
                     required,
+                    checked: sameAs(true),
                 },
             },
         }
     },
-    mounted() {
-        this.getUsers()
-    },
+    mounted() {},
     methods: {
-        getUsers() {
-            API.getUsers(
-                data => {
-                    console.log(data)
-                    if (data.length > 0) {
-                        this.users = data;
-                    }
-                },
-                err => {
-                    console.log('err :', err);
-                }
-            )
-        },
-        saveAppointment() {
-            API.saveAppointment(
-                this.form,
-                data => {
-                    // console.log(data)
-                    // if (data.length > 0) {
-                        this.users = data;
-                    // }
-                },
-                err => {
-                    console.log('err :', err);
-                }
-            )
-        },
         async submit() {
             const result = await this.v$.$validate()
             if (result) {
-                // notify user form is invalid
-                this.saveAppointment()
+                // this.saveAppointment()
             } else return
-            // perform async actions
         }
     }
 };

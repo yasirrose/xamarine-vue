@@ -37,7 +37,7 @@
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-2 px-3 toggle-sec">
                             <p>Status</p>
-                            <Toggle v-model="form.isSurveyEvent" />
+                            <Toggle v-model="form.isenabled" />
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-2">
                             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -61,7 +61,7 @@
                                             </v-btn>
                                             <div class="flex flex-wrap -mx-3 mb-2 px-3 toggle-sec">
                                                 <p>Free Form Entry</p>
-                                                <Toggle v-model="form.isSurveyEvent" />
+                                                <Toggle v-model="answer.Freeform" />
                                             </div>
                                         </div>
                                         <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-6" size="small" @click="addAnswer(index)">
@@ -112,7 +112,7 @@ export default {
             form: {
                 surveyTitle: null,
                 questions: [],
-                eventDesc: null,
+                isenabled: false,
                 startDate: null,
                 endDate: null,
                 isSurveyEvent: false,
@@ -176,6 +176,7 @@ export default {
                     this.form.surveyTitle = data.displayname;
                     if(data.questions.length) {
                         this.form.questions = JSON.parse(data.questions);
+                        this.form.isenabled = JSON.parse(data.isenabled.toLowerCase());
                         console.log('this.form.questions :', this.form.questions);
                     }
                 },
