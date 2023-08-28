@@ -14,6 +14,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@/assets/styles/tailwind.css";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import '@coddicat/vue-pinch-scroll-zoom/style.css';
+import 'material-icons/iconfont/material-icons.css';
 
 // mouting point for the whole app
 
@@ -44,6 +45,7 @@ import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
 import Maps from "@/views/admin/Maps.vue";
 import GenderSelection from "@/views/admin/GenderSelection.vue";
+import SurveySolution from "@/views/admin/SurveySolution.vue";
 
 // views for Auth layout
 
@@ -111,6 +113,10 @@ const routes = [
       {
         path: "/admin/gender-selection",
         component: GenderSelection,
+      },
+      {
+        path: "/admin/survey-solution",
+        component: SurveySolution,
       },
       {
         path: "/admin/session-complete",

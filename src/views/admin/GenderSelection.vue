@@ -40,6 +40,7 @@
                             </v-btn>
                         </div> -->
                         <!-- <v-card> -->
+                            
                         <v-tabs
                             v-model="tab"
                             color="deep-purple-accent-4"
@@ -48,32 +49,29 @@
                             <v-tab v-for="tab in tabs" v-bind:key="tab">{{ tab }}</v-tab>
                         </v-tabs>
                         <!-- <component v-bind:is="currentTabComponent" class="tab"></component> -->
-                        <v-window v-model="tab">
-                            <v-window-item>
-                                <v-container fluid>
-                                    <v-row>
-                                        <v-col cols="12" md="7">
-                                            <MaleImage v-bind:is="tab"/>
-                                        </v-col>
-                                        <v-col cols="12" md="4">
-                                            <SurveyMenu />
-                                        </v-col>
-                                    </v-row>
-                                </v-container>
-                            </v-window-item>
-                            <v-window-item>
-                                <v-container fluid>
-                                    <v-row>
-                                        <v-col cols="12" md="7">
-                                            <FemaleImage v-bind:is="tab"/>
-                                        </v-col>
-                                        <v-col cols="12" md="4">
-                                            <SurveyMenu />
-                                        </v-col>
-                                    </v-row>
-                                </v-container>
-                            </v-window-item>
-                        </v-window>
+                        <v-row class="mt-4">
+                            <v-col cols="12" md="7">
+                                <v-window v-model="tab">
+                                    <v-window-item>
+                                        <v-container fluid>
+                                            <v-row>
+                                                <MaleImage v-bind:is="tab"/>
+                                            </v-row>
+                                        </v-container>
+                                    </v-window-item>
+                                    <v-window-item>
+                                        <v-container fluid>
+                                            <v-row>
+                                                <FemaleImage v-bind:is="tab"/>
+                                            </v-row>
+                                        </v-container>
+                                    </v-window-item>
+                                </v-window>
+                            </v-col>
+                            <v-col cols="4" md="4">
+                                <SurveyMenu />
+                            </v-col>
+                        </v-row>
                         <!-- </v-card> -->
                     </form>
                 </template>
