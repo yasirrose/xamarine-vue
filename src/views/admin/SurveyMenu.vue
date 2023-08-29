@@ -1,62 +1,31 @@
 <template>
-<!-- <nav> -->
-  <!-- <div class="navbar"> -->
-    <!-- <i class='bx bx-menu'></i> -->
-    <!-- <div class="logo"><a href="#">Logo</a></div> -->
     <div class="nav-links">
-      <!-- <div class="sidebar-logo">
-        <span class="logo-name">Logo</span>
-        <i class='bx bx-x' ></i>
-      </div> -->
       <ul class="links">
-        <!-- <li><a href="#">HOME</a></li> -->
         <li>
-          <!-- <a href="#">HTML & CSS</a> -->
-          <!-- <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i> -->
-          <ul class="htmlCss-sub-menu sub-menu bg-purple-darken-4">
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Login Forms</a></li>
-            <li><a href="#">Card Design</a></li>
-            <li class="more">
+          <ul class="htmlCss-sub-menu sub-menu bg-purple-darken-4 rounded-xl">
+            <li v-for="survey in fileMenuItems" :key="survey.id" @click="startSurvey(survey.id)" class="cursor-pointer">
+                <a href="javascript:void(0)">{{ survey.displayname?? 'No Data' }}</a>
+                <span class="material-icons">keyboard_arrow_right</span>
+            </li>
+            <!-- <li class="more">
               <span><a href="#">More</a>
-                <!-- <img src="../../../public/Iconsax/Svg/Category/Arrow/vuesax/linear/arrow-right.svg" class='bx bxs-chevron-right arrow more-arrow logo'> -->
               </span>
               <ul class="more-sub-menu sub-menu bg-purple-darken-4">
                 <li><a href="#">Neumorphism</a></li>
                 <li><a href="#">Pre-loader</a></li>
                 <li><a href="#">Glassmorphism</a></li>
               </ul>
-            </li>
+            </li> -->
           </ul>
         </li>
-        <!-- <li>
-          <a href="#">JAVASCRIPT</a>
-          <i class='bx bxs-chevron-down js-arrow arrow '></i>
-          <ul class="js-sub-menu sub-menu">
-            <li><a href="#">Dynamic Clock</a></li>
-            <li><a href="#">Form Validation</a></li>
-            <li><a href="#">Card Slider</a></li>
-            <li><a href="#">Complete Website</a></li>
-          </ul>
-        </li>
-        <li><a href="#">ABOUT US</a></li>
-        <li><a href="#">CONTACT US</a></li> -->
       </ul>
     </div>
-    <!-- <div class="search-box">
-      <i class='bx bx-search'></i>
-      <div class="input-box">
-        <input type="text" placeholder="Search...">
-      </div>
-    </div> -->
-  <!-- </div> -->
-<!-- </nav> -->
 </template>
 
 <script>
 import useVuelidate from '@vuelidate/core'
 // import { required, sameAs } from '@vuelidate/validators'
-// import API from '@/api'
+import API from '@/api'
 
 export default {
     components: {},
@@ -65,56 +34,7 @@ export default {
     },
     data() {
         return {
-            fileMenuItems: [
-                {
-                    name: "Menu Item 1",
-                    action: () => {
-                    console.log("menu-item-1");
-                    }
-                },
-                { isDivider: true },
-                { name: "Menu Item 2" },
-                {
-                    name: "Sub 1",
-                    menu: [
-                    { name: "1.1" },
-                    { name: "1.2" },
-                    {
-                        name: "Sub-menu 2",
-                        menu: [
-                        { name: "2.1" },
-                        { name: "2.2" },
-                        {
-                            name: "Sub-menu 3",
-                            menu: [
-                            { name: "3.1" },
-                            { name: "3.2" },
-                            {
-                                name: "Sub-menu 4",
-                                menu: [{ name: "4.1" }, { name: "4.2" }, { name: "4.3" }]
-                            }
-                            ]
-                        }
-                        ]
-                    }
-                    ]
-                },
-
-                { name: "Menu Item 3" },
-                { isDivider: true },
-                {
-                    name: "Menu Item 4",
-                    action: () => {
-                    console.log("menu-item-4");
-                    }
-                },
-                {
-                    name: "Menu Item 5",
-                    action: () => {
-                    console.log("menu-item-5");
-                    }
-                }
-            ]
+            fileMenuItems: []
         }
     },
     // validations() {
@@ -122,7 +42,10 @@ export default {
     //         form: {},
     //     }
     // },
-    mounted() {},
+    mounted() {
+        this.getSurveysData()
+        console.log('getSurveysData :');
+    },
     methods: {
         async submit() {
             const result = await this.v$.$validate()
@@ -139,6 +62,22 @@ export default {
         if (item.action) {
             item.action();
         }
+        },
+        getSurveysData() {
+            API.getSurveys(
+                data => {
+                    console.log(data)
+                    if (data.length > 0) {
+                        this.fileMenuItems = data;
+                    }
+                },
+            err => {
+                console.log('err :', err);
+            }
+        )},
+        startSurvey(surveyId) {
+            console.log('surveyId :', surveyId);
+            this.$router.push('/admin/survey-solution')
         }
     }
 };
@@ -239,13 +178,14 @@ body{
   border-radius: 0 0 4px 4px;
   /* display: none; */
   z-index: 2;
+  width: 250px !important;
 }
   .links li:hover .htmlCss-sub-menu,
   .links li:hover .js-sub-menu{
   display: block;
 }
  .links li .sub-menu li{
-  padding: 0 22px;
+  padding: 10px 22px 10px 22px;
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
  .links li .sub-menu a{

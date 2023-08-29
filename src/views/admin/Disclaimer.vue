@@ -73,7 +73,7 @@ export default {
         async submit() {
             const result = await this.v$.$validate()
             if (result) {
-                // this.saveAppointment()
+                this.$router.push({ path: '/admin/gender-selection'})
             } else return
         }
     }
