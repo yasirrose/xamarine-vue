@@ -2,7 +2,7 @@
   <div class="appointments-sec">
     <v-card>
       <template v-slot:title>
-        <div class="w-full clearfix">
+        <div class="w-full clearfix flex justify-between">
           <div class="float-left">Appointments</div>
           <div class="float-right">
             <v-btn
@@ -17,9 +17,10 @@
       </template>
 
       <template v-slot:text>
+        <v-divider class="border-opacity-100" color="info"></v-divider>
         <ag-grid-vue
             style="width: 100%; height: 500px"
-            class="ag-theme-alpine"
+            class="ag-theme-alpine mt-4"
             :columnDefs="columnDefs"
             :rowData="rowData"
         >

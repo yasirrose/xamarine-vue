@@ -3,182 +3,150 @@
         <div class="w-full lg:w-12/12 px-4">
             <v-card>
                 <template v-slot:title>
-                    <div class="w-full clearfix">
-                        <div class="text-center">Survey Solution </div>
-                        <!-- <div class="float-right">
+                    <div class="container w-full clearfix flex justify-between">
+                        <div class="">Survey Solution</div>
+                        <div class="float-right">
                             <v-btn
-                                class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-1"
+                                class="bg-red text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-1"
                                 size="small"
-                                @click="$router.go(-1)">
-                                Go Back
+                                @click="$router.push('/admin/view-appointments')">
+                                Abort
                             </v-btn>
-                        </div> -->
+                        </div>
                     </div>
                 </template>
-
+                
                 <template v-slot:text>
-                    <form class="w-full max-w-lg" @submit.prevent="onSubmit">
+                    <v-divider class="border-opacity-100" color="info"></v-divider>
+                    <form class="w-full max-w-lg mt-4" @submit.prevent="onSubmit">
+                        <v-divider></v-divider>
                         <section id="app" class="hero is-warning is-fullheight">
+                            <!--heroBody-->
+                            <div class="hero-body">
+                            <div class="container is-fluid">
+                                <div class="columns is-centered is-marginless is-paddingless box">
+                                    <!-- <div class="column is-5 sidebar">
+                                        <div class="sidebarContainer">
+                                        <div class="tags is-marginless">
+                                            <span class="tag is-medium is-rounded">#vuejs</span>
+                                            <span class="tag is-medium is-rounded">#js</span>
+                                        </div>
+                                        <h1 class="title is-2">vueQuiz</h1>
+                                        <h2 class="subtitle is-5">A simple VueJS based quiz page.</h2>
+                                        <p class="subtitle is-6 has-text-justified">Created using <em>VueJs</em>, <em>Bulma</em>, <em>animate.css</em>, and <em>Font Awesome 4</em>.</p>
+                                        </div>
+                                        <div class="sidebarFooter">
+                                        <p>Photo by <a href="https://unsplash.com/@debidiemski">Deborah Diem</a></p>
+                                        </div>
+                                    </div> -->
+                                    <div class="column is-7 questionBox is-paddingless is-marginless">
+                                        <!-- <transition enter-active-class="animated jackInTheBox" leave-active-class="animated zoomOut" mode="out-in">
+                                            <div v-if="!quizStarted" v-bind:key="quizStarted" class="quizForm">
+                                                <div class="titleContainer">
+                                                    <h2 class="title is-4">Getting Started</h2>
+                                                </div>
+    
+                                                <div class="quizFormContainer">
+                                                    <div class="field">
+                                                        <div class="field-label is-normal is-size-5">
+                                                        <label class="label">Name</label>
+                                                        </div>
+                                                        <div class="control">
+                                                        <input class="input is-rounded" type="text" v-model="quiz.user" placeholder="Enter your name" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="field">
+                                                        <div class="field-label is-normal is-size-5">
+                                                        <label class="label">Difficulty</label>
+                                                        </div>
+                                                    
+                                                    <div class="control">
+                                                    <label class="radio">
+                                                        <input type="radio" name="0" checked>
+                                                        Easy
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="1">
+                                                        Medium
+                                                    </label>
+                                                        <label class="radio">
+                                                        <input type="radio" name="2">
+                                                        Hard
+                                                    </label>
+                                                    </div>
+                                                    </div>
+                                                    <a class="pagination-previous button is-medium is-info is-rounded is-outlined is-pulled-right" @click="quizStarted=!quizStarted" style="margin-bottom:12px">
+                                                        Start
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </transition> -->
+                                        <transition enter-active-class="animated jackInTheBox" leave-active-class="animated zoomOut" mode="out-in">
+                                            <div class="questionContainer" v-if="questionIndex<quiz.questions.length && quizStarted" v-bind:key="questionIndex">
+                                                <div class="titleContainer">
+                                                    <h2 class="title is-5">{{questionIndex+1}}. {{ quiz.questions[questionIndex].text }}</h2>
+                                                </div>
+    
+                                                <div class="optionContainer">
+                                                    <div class="option" v-for="(response, index) in quiz.questions[questionIndex].responses" @click="selectOption(index)" :class="{ 'is-selected': userResponses[questionIndex] == index}" :key="index">
+                                                        {{ index+1 }}. {{ response.text }}
+                                                    </div>
+                                                </div>
+    
+                                                <div class="questionFooter">
+                                                    <nav class="pagination is-centered justify-space-between flex" role="navigation" aria-label="pagination">
+                                                        <!-- <a class="pagination-previous button is-info is-rounded is-outlined" v-on:click="prev();" :disabled="questionIndex < 1">
+                                                            Previous Question
+                                                        </a> -->
+                                                            <v-btn
+                                                                class="text-none pagination-previous"
+                                                                color="#3298dc"
+                                                                theme="dark"
+                                                                variant="flat"
+                                                                rounded
+                                                                v-on:click="prev();" :disabled="questionIndex < 1"
+                                                            >
+                                                                Previous Question
+                                                            </v-btn>
+                                                            <v-btn
+                                                                class="text-none pagination-previous"
+                                                                color="#3298dc"
+                                                                theme="dark"
+                                                                variant="flat"
+                                                                rounded
+                                                                v-on:click="next();" :disabled="questionIndex>=quiz.questions.length"
+                                                            >
+                                                                {{ (userResponses[questionIndex]==null)?'Skip':'Next' }} Question
+                                                            </v-btn>
+                                                        <!-- <a class="pagination-next button is-info is-rounded" v-on:click="next();" :disabled="questionIndex>=quiz.questions.length">
+                                                            {{ (userResponses[questionIndex]==null)?'Skip':'Next' }} Question
+                                                        </a> -->
+                                                    </nav>
+                                                    <div class="progressContainer">
+                                                        <v-progress-linear :height="12" :model-value="(questionIndex/quiz.questions.length)*100" :buffer-value="(questionIndex/quiz.questions.length)*100" color="green"></v-progress-linear>
+                                                        <!-- <Progress size="md" :progress="(questionIndex/quiz.questions.length)*100" max="100">{{(questionIndex/quiz.questions.length)*100}}%</Progress> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </transition>
+                                        <transition enter-active-class="animated jackInTheBox" leave-active-class="animated zoomOut" mode="out-in">
 
-                        <!--heroBody-->
-                        <div class="hero-body">
-
-                        <!--container-->
-                        <div class="container is-fluid">
-
-                            <!--columns-->
-                            <div class="columns is-centered is-marginless is-paddingless box">
-
-                                <!--sidebar-->
-                                <div class="column is-5 sidebar">
-                                    <div class="sidebarContainer">
-
-                                    <div class="tags is-marginless">
-                                        <span class="tag is-medium is-rounded">#vuejs</span>
-                                        <span class="tag is-medium is-rounded">#js</span>
-                                    </div>
-
-                                    <!-- title -->
-                                    <h1 class="title is-2">vueQuiz</h1>
-                                    <h2 class="subtitle is-5">A simple VueJS based quiz page.</h2>
-
-                                    <!-- description -->
-                                    <p class="subtitle is-6 has-text-justified">Created using <em>VueJs</em>, <em>Bulma</em>, <em>animate.css</em>, and <em>Font Awesome 4</em>.</p>
-                                    </div>
-
-                                    <div class="sidebarFooter">
-                                    <p>Photo by <a href="https://unsplash.com/@debidiemski">Deborah Diem</a></p>
+                                            <div v-if="questionIndex >= quiz.questions.length && quizStarted" v-bind:key="questionIndex" class="quizCompleted has-text-centered">
+                                                <span class="icon is-large has-text-success">
+                                                    <i class="fa fa-check-circle-o fa-3x"></i>
+                                                </span>
+                                                <h2 class="title">
+                                                    You did an amazing job!
+                                                </h2>
+                                                <p class="subtitle">
+                                                    Total score: {{ score() }} / {{ quiz.questions.length }}
+                                                </p>
+                                            </div>
+                                        </transition>
                                     </div>
                                 </div>
-                                <!--/sidebar-->
-
-                                <!--questionBox-->
-                                <div class="column is-7 questionBox is-paddingless is-marginless">
-
-                                    <!-- transition -->
-                                    <!-- <transition enter-active-class="animated jackInTheBox" leave-active-class="animated zoomOut" mode="out-in"> -->
-
-                                    <div v-if="!quizStarted" v-bind:key="quizStarted" class="quizForm">
-                                        <div class="titleContainer">
-                                            <h2 class="title is-4">Getting Started</h2>
-                                        </div>
-
-                                        <div class="quizFormContainer">
-                                            <div class="field">
-                                                <div class="field-label is-normal is-size-5">
-                                                <label class="label">Name</label>
-                                                </div>
-                                                <div class="control">
-                                                <input class="input is-rounded" type="text" v-model="quiz.user" placeholder="Enter your name" required>
-                                                </div>
-                                            </div>
-                                            <div class="field">
-                                                <div class="field-label is-normal is-size-5">
-                                                <label class="label">Difficulty</label>
-                                                </div>
-                                            
-                                            <div class="control">
-                                            <label class="radio">
-                                                <input type="radio" name="0" checked>
-                                                Easy
-                                            </label>
-                                            <label class="radio">
-                                                <input type="radio" name="1">
-                                                Medium
-                                            </label>
-                                                <label class="radio">
-                                                <input type="radio" name="2">
-                                                Hard
-                                            </label>
-                                            </div>
-                                            </div>
-
-                                            <a class="pagination-previous button is-medium is-info is-rounded is-outlined is-pulled-right"  style="margin-bottom:12px">
-                                        Start
-                                    </a>
-                                        </div>
-                                    </div>
-
-                                    <!--qusetionContainer-->
-                                    <div class="questionContainer" v-if="questionIndex<quiz.questions.length && quizStarted" v-bind:key="questionIndex">
-
-                                        <!-- questionTitle -->
-                                        <div class="titleContainer">
-                                            <h2 class="title is-5">{{questionIndex+1}}. {{ quiz.questions[questionIndex].text }}</h2>
-                                        </div>
-
-                                        <!-- quizOptions -->
-                                        <div class="optionContainer">
-                                            <div class="option" v-for="(response, index) in quiz.questions[questionIndex].responses" @click="selectOption(index)" :class="{ 'is-selected': userResponses[questionIndex] == index}" :key="index">
-                                                {{ index | charIndex }}. {{ response.text }}
-                                            </div>
-                                        </div>
-
-                                        <!--quizFooter: navigation and progress-->
-                                        <div class="questionFooter">
-
-                                            <!--pagination-->
-                                            <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-
-                                                <!-- prevButton -->
-                                                <a class="pagination-previous button is-info is-rounded is-outlined" v-on:click="prev();" :disabled="questionIndex < 1">
-                                        Previous Question
-                                    </a>
-
-                                                <!-- prevButton -->
-                                                <a class="pagination-next button is-info is-rounded" v-on:click="next();" :disabled="questionIndex>=quiz.questions.length">
-                                        {{ (userResponses[questionIndex]==null)?'Skip':'Next' }} Question
-                                    </a>
-
-                                            </nav>
-                                            <!--/pagination-->
-
-                                            <!--progress-->
-                                            <div class="progressContainer">
-                                                <progress class="progress is-success is-small" :value="(questionIndex/quiz.questions.length)*100" max="100">{{(questionIndex/quiz.questions.length)*100}}%</progress>
-                                            </div>
-                                            <!--/progress-->
-
-                                        </div>
-                                        <!--/quizFooter-->
-
-                                    </div>
-                                    <!--/questionContainer-->
-
-                                    <!--quizCompletedResult-->
-                                    <div v-if="questionIndex >= quiz.questions.length && quizStarted" v-bind:key="questionIndex" class="quizCompleted has-text-centered">
-
-                                        <!-- quizCompletedIcon: Achievement Icon -->
-                                        <span class="icon is-large has-text-success">
-                                    <i class="fa fa-check-circle-o fa-3x"></i>
-                                </span>
-
-                                        <!--resultTitleBlock-->
-                                        <h2 class="title">
-                                            You did an amazing job!
-                                        </h2>
-                                        <p class="subtitle">
-                                            Total score: {{ score() }} / {{ quiz.questions.length }}
-                                        </p>
-                                        <!--/resultTitleBlock-->
-
-                                    </div>
-                                    <!--/quizCompetedResult-->
-
-                                    <!-- </transition> -->
-
-                                </div>
-                                <!--/questionBox-->
-
                             </div>
-                            <!--/columns-->
-
-                        </div>
-                        <!--/container-->
-
-                        </div>
-                        <!--/heroBody-->
-
+                            </div>
                         </section>
                     </form>
                     <div class="float-right">
@@ -300,13 +268,14 @@ var quiz = {
    },
    userResponseSkelaton = Array(quiz.questions.length).fill(null);
 
- /* eslint-disable */
+
 import useVuelidate from '@vuelidate/core'
-import { required, sameAs } from '@vuelidate/validators'
+// import { Progress } from 'flowbite-vue'
 // import API from '@/api'
 
 export default {
     components: {
+        // Progress
     },
     setup() {
         return { v$: useVuelidate() }
@@ -338,12 +307,12 @@ export default {
     mounted() {},
     methods: {
       selectOption: function(index) {
-         Vue.set(this.userResponses, this.questionIndex, index);
-         //console.log(this.userResponses);
+        // this.$set(this.userResponses, this.questionIndex, index);
+        this.userResponses[this.questionIndex] = index
       },
       next: function() {
-         if (this.questionIndex < this.quiz.questions.length)
-            this.questionIndex++;
+        if (this.questionIndex < this.quiz.questions.length)
+        this.questionIndex++;
       },
 
       prev: function() {
@@ -377,8 +346,8 @@ export default {
 </script>
 
 <style lang="scss">
-// $trans_duration: 0.3s;
-// $titleBg: #29c5dc;
+$trans_duration: 0.3s;
+$titleBg: #29c5dc;
 
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,400i,700");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
@@ -394,7 +363,7 @@ body {
 }
 
 .button {
-//    transition: $trans_duration;
+   transition: $trans_duration;
 }
 .title,
 .subtitle {
@@ -402,7 +371,7 @@ body {
    font-weight: normal;
 }
 .animated {
-//    transition-duration: $trans_duration/2;
+   transition-duration: $trans_duration/2;
 }
 
 .sidebar {
@@ -440,12 +409,12 @@ body {
    display: flex;
 
    .titleContainer {
-    //   background: $titleBg;
+      background: #4a148c;
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       margin-bottom: 12px;
 
       h2 {
-        //  color: white;
+         color: white;
          padding: 18px;
       }
    }
@@ -485,7 +454,7 @@ body {
             padding: 9px 18px;
             margin: 0 18px;
             margin-bottom: 12px;
-            // transition: $trans_duration;
+            transition: $trans_duration;
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.05);
             border: transparent 1px solid;
@@ -545,6 +514,12 @@ body {
          flex-direction: column;
       }
    }
+}
+
+.pagination-previous {
+    background-color: #3298dc;
+    border-color: transparent;
+    color: #fff;
 }
 
 @media screen and (max-width: 768px) {

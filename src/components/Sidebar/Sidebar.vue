@@ -344,7 +344,7 @@
             </router-link>
           </li> -->
 
-          <li class="items-center">
+          <!-- <li class="items-center">
             <router-link
               to="/admin/signature"
               v-slot="{ href, navigate, isActive }"
@@ -366,7 +366,7 @@
                 Signature
               </a>
             </router-link>
-          </li>
+          </li> -->
 
           <li class="items-center">
             <router-link
