@@ -17,9 +17,10 @@
       </template>
 
       <template v-slot:text>
+        <v-divider class="border-opacity-100" color="info"></v-divider>
         <ag-grid-vue
             style="width: 100%; height: 500px"
-            class="ag-theme-alpine"
+            class="ag-theme-alpine mt-4"
             :columnDefs="columnDefs"
             :rowData="rowData"
         >
