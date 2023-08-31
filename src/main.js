@@ -1,20 +1,22 @@
 import { createApp } from "vue";
 import { createWebHistory, createRouter } from "vue-router";
-import VueSweetalert2 from 'vue-sweetalert2';
-import moment from 'moment'
+import VueSweetalert2 from "vue-sweetalert2";
+import moment from "moment";
 import { VueSignaturePad } from "vue-signature-pad";
-import Toggle from '@vueform/toggle'
-import PinchScrollZoom from '@coddicat/vue-pinch-scroll-zoom';
+import Toggle from "@vueform/toggle";
+import PinchScrollZoom from "@coddicat/vue-pinch-scroll-zoom";
 
-// import { createPinia } from 'pinia';
-// import { useAuthStore } from '@/stores';
+import { createPinia } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+import { useAuthStore } from "@/stores";
 // styles
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@/assets/styles/tailwind.css";
-import 'sweetalert2/dist/sweetalert2.min.css';
-import '@coddicat/vue-pinch-scroll-zoom/style.css';
-import 'material-icons/iconfont/material-icons.css';
+import "sweetalert2/dist/sweetalert2.min.css";
+import "@coddicat/vue-pinch-scroll-zoom/style.css";
+import "material-icons/iconfont/material-icons.css";
+import 'mosha-vue-toastify/dist/style.css'
 
 // mouting point for the whole app
 
@@ -59,17 +61,18 @@ import Profile from "@/views/Profile.vue";
 // import Index from "@/views/Index.vue";
 
 // Vuetify
-import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
 
 const vuetify = createVuetify({
   components,
   directives,
-})
+});
 
-// const pinia = createPinia()
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
 // routes
 
 const routes = [
@@ -111,11 +114,12 @@ const routes = [
         component: MaleImage,
       },
       {
+        name: "GenderSelection",
         path: "/admin/gender-selection",
         component: GenderSelection,
       },
       {
-        path: "/admin/survey-solution",
+        path: "/admin/survey-solution/:id",
         component: SurveySolution,
       },
       {
@@ -130,7 +134,7 @@ const routes = [
         path: "/admin/schedule/:id",
         name: "Schedule",
         component: Schedule,
-        props: true
+        props: true,
       },
       {
         path: "/admin/view-surveys",
@@ -195,19 +199,17 @@ const router = createRouter({
   routes,
 });
 
-// router.beforeEach(async (to) => {
-//   // redirect to login page if not logged in and trying to access a restricted page
-//   const publicPages = ['/auth/login'];
-//   const authRequired = !publicPages.includes(to.path);
-//   const auth = useAuthStore();
+router.beforeEach(async (to) => {
+  const publicPages = ["/auth/login"];
+  const authRequired = !publicPages.includes(to.path);
+  const authStore = useAuthStore();
 
-//   if (authRequired && !auth.user) {
-//     // auth.returnUrl = to.fullPath;
-//     return '/auth/login';
-//   }
-// });
+  if (authRequired && !authStore.user) {
+    return "/auth/login";
+  }
+});
 
-const app = createApp(App)
+const app = createApp(App);
 
 app.use(router);
 
@@ -215,7 +217,7 @@ app.use(VueSweetalert2);
 
 app.use(vuetify);
 
-// app.use(pinia);
+app.use(pinia);
 
 app.component("VueSignaturePad", VueSignaturePad);
 
@@ -223,26 +225,26 @@ app.component("Toggle", Toggle);
 
 app.component("PinchScrollZoom", PinchScrollZoom);
 
-app.mount('#app');
+app.mount("#app");
 
 app.config.globalProperties.$filters = {
   dateFormat(value) {
     if (value) {
-      return moment(String(value)).format('MM/DD/YYYY')
+      return moment(String(value)).format("MM/DD/YYYY");
     }
   },
   getTime(value) {
     if (value) {
-      return moment(String(value)).format("hh:mm a")
+      return moment(String(value)).format("hh:mm a");
     }
   },
   stringToDate(params) {
     if (params) {
       var date = new Date(params.value);
-      var day = date.getDate().toString().padStart(2, '0');
-      var month = (date.getMonth() + 1).toString().padStart(2, '0');
+      var day = date.getDate().toString().padStart(2, "0");
+      var month = (date.getMonth() + 1).toString().padStart(2, "0");
       var year = date.getFullYear().toString().substring(2);
-      return day + '/' + month + '/' + year;
+      return day + "/" + month + "/" + year;
     }
-  }
-}
+  },
+};
