@@ -94,14 +94,8 @@ const API = {
     // const headers = {
 
     // }
-    login(data, cb, errorCB) {
-        // axios.post('http://api.voilamed.com/api/v1/auth/login', data)
-        // .then(res => {
-        //     console.log(res);
-        // }).catch(err => {
-        //     console.log(err);
-        // });
-        axios
+    async login(data, cb, errorCB) {
+        const response = await axios
             .post(API_URL + 'auth/login', data)
             .then(resp => {
                 cb(resp.data)
@@ -109,6 +103,7 @@ const API = {
             .catch(err => {
                 errorCB(err.response)
             })
+        return response;
     },
     getAppointments(cb, errorCB) {
         axios
@@ -164,7 +159,7 @@ const API = {
                 errorCB(err.response)
             })
     },
-    deleteclient(data, cb, errorCB) {
+    getQuestions(data, cb, errorCB) {
         axios
             .post(API_URL + 'deleteclient', data)
             .then(resp => {
