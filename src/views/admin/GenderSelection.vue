@@ -70,6 +70,7 @@
                             </v-col>
                             <v-col cols="4" md="4">
                                 <SurveyMenu />
+                                <SelectedSurveys class="mt-4" v-if="attemptedSurveys"/>
                             </v-col>
                         </v-row>
                         <!-- </v-card> -->
@@ -86,13 +87,15 @@ import { required } from '@vuelidate/validators'
 import MaleImage from './MaleImage'
 import FemaleImage  from './FemaleImage'
 import SurveyMenu  from './SurveyMenu'
+import SelectedSurveys  from './SurveyMenu'
 import API from '@/api'
 
 export default {
     components: {
         SurveyMenu,
         MaleImage,
-        FemaleImage
+        FemaleImage,
+        SelectedSurveys
     },
     setup() {
         return { v$: useVuelidate() }
@@ -102,9 +105,11 @@ export default {
             tab: 0,
             tabs: ["Male", "Female"],
             options: ['list', 'of', 'options'],
+            questionsVerified: true,
             form: {
                 pin: null,
-            }
+            },
+            attemptedSurveys: false
         }
     },
     validations() {
@@ -113,11 +118,14 @@ export default {
                 pin: {
                     required,
                 },
-            },
+            }
         }
     },
     mounted() {
         // this.getUsers()
+        if(this.$route.query) {
+            this.attemptedSurveys = this.$route.query.completed;
+        }
     },
     methods: {
         getUsers() {

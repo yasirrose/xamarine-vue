@@ -84,12 +84,12 @@
                                         <transition enter-active-class="animated jackInTheBox" leave-active-class="animated zoomOut" mode="out-in">
                                             <div class="questionContainer" v-if="questionIndex<quiz.questions.length && quizStarted" v-bind:key="questionIndex">
                                                 <div class="titleContainer">
-                                                    <h2 class="title is-5">{{questionIndex+1}}. {{ quiz.questions[questionIndex].text }}</h2>
+                                                    <h2 class="title is-5">{{questionIndex+1}}. {{ quiz.questions[questionIndex].Text }}</h2>
                                                 </div>
     
                                                 <div class="optionContainer">
-                                                    <div class="option" v-for="(response, index) in quiz.questions[questionIndex].responses" @click="selectOption(index)" :class="{ 'is-selected': userResponses[questionIndex] == index}" :key="index">
-                                                        {{ index+1 }}. {{ response.text }}
+                                                    <div class="option" v-for="(response, index) in quiz.questions[questionIndex].Answers" @click="selectOption(index)" :class="{ 'is-selected': userResponses[questionIndex] == index}" :key="index">
+                                                        {{ index+1 }}. {{ response.Text }}
                                                     </div>
                                                 </div>
     
@@ -136,11 +136,11 @@
                                                     <i class="fa fa-check-circle-o fa-3x"></i>
                                                 </span>
                                                 <h2 class="title">
-                                                    You did an amazing job!
+                                                    Survey Completed. Please submit 
                                                 </h2>
-                                                <p class="subtitle">
+                                                <!-- <p class="subtitle">
                                                     Total score: {{ score() }} / {{ quiz.questions.length }}
-                                                </p>
+                                                </p> -->
                                             </div>
                                         </transition>
                                     </div>
@@ -163,122 +163,129 @@
 <script>
 var quiz = {
       user: "Dave",
-      questions: [
-         {
-            text: "What is the full form of HTTP?",
-            responses: [
-               { text: "Hyper text transfer package" },
-               { text: "Hyper text transfer protocol", correct: true },
-               { text: "Hyphenation text test program" },
-               { text: "None of the above" }
-            ]
-         },
-         {
-            text: "HTML document start and end with which tag pairs?",
-            responses: [
-               { text: "HTML", correct: true },
-               { text: "WEB" },
-               { text: "HEAD" },
-               { text: "BODY" }
-            ]
-         },
-         {
-            text: "Which tag is used to create body text in HTML?",
-            responses: [
-               { text: "HEAD" },
-               { text: "BODY", correct: true },
-               { text: "TITLE" },
-               { text: "TEXT" }
-            ]
-         },
-         {
-            text: "Outlook Express is _________",
-            responses: [
-               { text: "E-Mail Client", correct: true },
-               { text: "Browser" },
-               {
-                  text: "Search Engine"
-               },
-               { text: "None of the above" }
-            ]
-         },
-         {
-            text: "What is a search engine?",
-            responses: [
-               { text: "A hardware component " },
-               {
-                  text: "A machinery engine that search data"
-               },
-               { text: "A web site that searches anything", correct: true },
-               { text: "A program that searches engines" }
-            ]
-         },
-         {
-            text:
-               "What does the .com domain represents?",
-            responses: [
-               { text: "Network" },
-               { text: "Education" },
-               { text: "Commercial", correct: true },
-               { text: "None of the above" }
-            ]
-         },
-         {
-            text: "In Satellite based communication, VSAT stands for? ",
-            responses: [
-               { text: " Very Small Aperture Terminal", correct: true },
-               { text: "Varying Size Aperture Terminal " },
-               {
-                  text: "Very Small Analog Terminal"
-               },
-               { text: "None of the above" }
-            ]
-         },
-         {
-            text: "What is the full form of TCP/IP? ",
-            responses: [
-               { text: "Telephone call protocol / international protocol" },
-               { text: "Transmission control protocol / internet protocol", correct: true },
-               { text: "Transport control protocol / internet protocol " },
-               { text: "None of the above" }
-            ]
-         },
-         {
-            text:
-               "What is the full form of HTML?",
-            responses: [
-               {
-                  text: "Hyper text marking language"
-               },
-               { text: "Hyphenation text markup language " },
-               { text: "Hyper text markup language", correct: true },
-               { text: "Hyphenation test marking language" }
-            ]
-         },
-         {
-            text: "\"Yahoo\", \"Infoseek\" and \"Lycos\" are _________?",
-            responses: [
-               { text: "Browsers " },
-               { text: "Search Engines", correct: true },
-               { text: "News Group" },
-               { text: "None of the above" }
-            ]
-         }
-      ]
+      questions: []
+    //   [
+    //      {
+    //         Text: "What is the full form of HTTP?",
+    //         Answers: [
+    //            { Text: "Hyper Text transfer package" },
+    //            { Text: "Hyper Text transfer protocol", correct: true },
+    //            { Text: "Hyphenation Text test program" },
+    //            { Text: "None of the above" }
+    //         ]
+    //      },
+    //      {
+    //         Text: "HTML document start and end with which tag pairs?",
+    //         Answers: [
+    //            { Text: "HTML", correct: true },
+    //            { Text: "WEB" },
+    //            { Text: "HEAD" },
+    //            { Text: "BODY" }
+    //         ]
+    //      },
+    //      {
+    //         Text: "Which tag is used to create body Text in HTML?",
+    //         Answers: [
+    //            { Text: "HEAD" },
+    //            { Text: "BODY", correct: true },
+    //            { Text: "TITLE" },
+    //            { Text: "TEXT" }
+    //         ]
+    //      },
+    //      {
+    //         Text: "Outlook Express is _________",
+    //         Answers: [
+    //            { Text: "E-Mail Client", correct: true },
+    //            { Text: "Browser" },
+    //            {
+    //               Text: "Search Engine"
+    //            },
+    //            { Text: "None of the above" }
+    //         ]
+    //      },
+    //      {
+    //         Text: "What is a search engine?",
+    //         Answers: [
+    //            { Text: "A hardware component " },
+    //            {
+    //               Text: "A machinery engine that search data"
+    //            },
+    //            { Text: "A web site that searches anything", correct: true },
+    //            { Text: "A program that searches engines" }
+    //         ]
+    //      },
+    //      {
+    //         Text:
+    //            "What does the .com domain represents?",
+    //         Answers: [
+    //            { Text: "Network" },
+    //            { Text: "Education" },
+    //            { Text: "Commercial", correct: true },
+    //            { Text: "None of the above" }
+    //         ]
+    //      },
+    //      {
+    //         Text: "In Satellite based communication, VSAT stands for? ",
+    //         Answers: [
+    //            { Text: " Very Small Aperture Terminal", correct: true },
+    //            { Text: "Varying Size Aperture Terminal " },
+    //            {
+    //               Text: "Very Small Analog Terminal"
+    //            },
+    //            { Text: "None of the above" }
+    //         ]
+    //      },
+    //      {
+    //         Text: "What is the full form of TCP/IP? ",
+    //         Answers: [
+    //            { Text: "Telephone call protocol / international protocol" },
+    //            { Text: "Transmission control protocol / internet protocol", correct: true },
+    //            { Text: "Transport control protocol / internet protocol " },
+    //            { Text: "None of the above" }
+    //         ]
+    //      },
+    //      {
+    //         Text:
+    //            "What is the full form of HTML?",
+    //         Answers: [
+    //            {
+    //               Text: "Hyper Text marking language"
+    //            },
+    //            { Text: "Hyphenation Text markup language " },
+    //            { Text: "Hyper Text markup language", correct: true },
+    //            { Text: "Hyphenation test marking language" }
+    //         ]
+    //      },
+    //      {
+    //         Text: "\"Yahoo\", \"Infoseek\" and \"Lycos\" are _________?",
+    //         Answers: [
+    //            { Text: "Browsers " },
+    //            { Text: "Search Engines", correct: true },
+    //            { Text: "News Group" },
+    //            { Text: "None of the above" }
+    //         ]
+    //      }
+    //   ]
    },
    userResponseSkelaton = Array(quiz.questions.length).fill(null);
 
 
 import useVuelidate from '@vuelidate/core'
+// import { useAuthStore } from '../../stores/auth.store';
 // import { Progress } from 'flowbite-vue'
-// import API from '@/api'
+import API from '@/api'
+import { required } from '@vuelidate/validators';
 
 export default {
     components: {
         // Progress
     },
     setup() {
-        return { v$: useVuelidate() }
+        // const myStore = useAuthStore();
+        return {
+            // myVariable: myStore.myVariable,
+            v$: useVuelidate() 
+        }
     },
     data() {
         return {
@@ -286,7 +293,10 @@ export default {
             questionIndex: 0,
             userResponses: userResponseSkelaton,
             quizStarted: true,
-            isActive: false
+            isActive: false,
+            form: {
+                id: this.$route.params.id
+            }
         }
     },
     filters: {
@@ -297,51 +307,63 @@ export default {
     validations() {
         return {
             form: {
-                // readDisclaimer: {
-                //     required,
-                //     checked: sameAs(true),
-                // },
+                id: required,
             },
         }
     },
-    mounted() {},
+    mounted() {
+        this.getQuestions();
+    },
     methods: {
-      selectOption: function(index) {
-        // this.$set(this.userResponses, this.questionIndex, index);
-        this.userResponses[this.questionIndex] = index
-      },
-      next: function() {
-        if (this.questionIndex < this.quiz.questions.length)
-        this.questionIndex++;
-      },
+        selectOption: function(index) {
+            // this.$set(this.userResponses, this.questionIndex, index);
+            this.userResponses[this.questionIndex] = index
+        },
+        next: function() {
+            if (this.questionIndex < this.quiz.questions.length)
+            this.questionIndex++;
+        },
 
-      prev: function() {
-         if (this.quiz.questions.length > 0) this.questionIndex--;
-      },
-      // Return "true" count in userResponses
-      score: function() {
-         var score = 0;
-         for (let i = 0; i < this.userResponses.length; i++) {
-            if (
-               typeof this.quiz.questions[i].responses[
-                  this.userResponses[i]
-               ] !== "undefined" &&
-               this.quiz.questions[i].responses[this.userResponses[i]].correct
-            ) {
-               score = score + 1;
+        prev: function() {
+            if (this.quiz.questions.length > 0) this.questionIndex--;
+        },
+        score: function() {
+            var score = 0;
+            for (let i = 0; i < this.userResponses.length; i++) {
+                if (
+                typeof this.quiz.questions[i].Answers[
+                    this.userResponses[i]
+                ] !== "undefined" &&
+                this.quiz.questions[i].Answers[this.userResponses[i]].correct
+                ) {
+                score = score + 1;
+                }
             }
-         }
-         return score;
-
-         //return this.userResponses.filter(function(val) { return val }).length;
-      },
-      async submit() {
-          const result = await this.v$.$validate()
-          if (result) {
-              this.$router.push({ path: '/admin/signature'})
-          } else return
-      }
-   }
+            return score;
+            //return this.userResponses.filter(function(val) { return val }).length;
+        },
+        async submit() {
+            const result = await this.v$.$validate()
+            if (result) {
+                this.$router.push({ path: '/admin/signature'})
+            } else return
+        },
+        getQuestions() {
+            API.getSurvey(
+                this.form.id,
+                data => {
+                console.log('data :', data);
+                    if(data.questions.length) {
+                        this.quiz.questions = JSON.parse(data.questions);
+                        console.log('this.form.questions :', this.quiz.questions);
+                    }
+                },
+                err => {
+                    console.log('err :', err);
+                }
+            )
+        },
+    }
 };
 </script>
 
@@ -357,8 +379,8 @@ body {
    font-size: 14px;
 
    /* mocking native UI */
-   cursor: default !important; /* remove text selection cursor */
-   user-select: none; /* remove text selection */
+   cursor: default !important; /* remove Text selection cursor */
+   user-select: none; /* remove Text selection */
    user-drag: none; /* disbale element dragging */
 }
 

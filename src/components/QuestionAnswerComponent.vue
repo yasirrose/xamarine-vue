@@ -28,12 +28,18 @@
 </template>
 
 <script>
+// import useVuelidate from '@vuelidate/core'
+// import { required } from '@vuelidate/validators'
+
 export default {
-  data() {
-    return {
-      questions: []
-    };
-  },
+    data() {
+        return {
+        questions: []
+        };
+    },
+    // setup() {
+    //     return { v2$: useVuelidate() }
+    // },
   methods: {
     addQuestion() {
       this.questions.push({ text: "", answers: [] });
@@ -47,7 +53,14 @@ export default {
     removeAnswer(q, a) {
       this.questions[q].answers.splice(a, 1);
     }
-  }
+  },
+//   validations() {
+//         return {
+//             questions: {
+//                 required
+//             },
+//         }
+//     },
 };
 </script>
 <style scoped>
