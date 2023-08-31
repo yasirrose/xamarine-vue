@@ -274,7 +274,7 @@
 
           <li class="items-center">
             <router-link
-              to="/admin/survey-solution"
+              to="/admin/survey-solution/24"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -319,7 +319,7 @@
               </a>
             </router-link>
           </li> -->
-<!-- 
+          <!-- 
           <li class="items-center">
             <router-link
               to="/admin/male-image"

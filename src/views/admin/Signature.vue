@@ -87,6 +87,7 @@ export default {
         async submit() {
             const result = await this.v$.$validate()
             if (result) {
+                this.$router.push({name: 'GenderSelection', query: { completed: true }})
                 // this.saveAppointment()
             } else return
         },
@@ -97,6 +98,7 @@ export default {
         save() {
             const { isEmpty, data } = this.$refs.signaturePad.saveSignature();
             if(!isEmpty) {
+                console.log('this.form.signature :', this.form.signature);
                 this.form.signature = data;
             } else {
                 console.log('No data found in signature')

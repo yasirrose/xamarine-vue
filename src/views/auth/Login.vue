@@ -33,7 +33,7 @@
             <!-- <div class="text-blueGray-400 text-center mb-3 font-bold">
               <small>Or sign in with credentials</small>
             </div> -->
-            <form>
+            <form @submit.prevent="onSubmit">
               <div class="relative w-full mb-3">
                 <label
                   class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -43,11 +43,14 @@
                 </label>
                 <input
                   type="email"
-                  v-model = "email"
+                  v-model = "form.email"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="Email"
                 />
                 {{ email }}
+                <div class="input-errors" v-for="(error, index) of v$.form.email.$errors" :key="index">
+                    <div class="text-red-500 text-xs italic">{{ error.$message }}</div>
+                </div>
               </div>
 
               <div class="relative w-full mb-3">
@@ -59,12 +62,14 @@
                 </label>
                 <input
                   type="password"
-                  v-model = "password"
+                  v-model = "form.password"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="Password"
                 />
                 {{ password }}
-
+                <div class="input-errors" v-for="(error, index) of v$.form.password.$errors" :key="index">
+                    <div class="text-red-500 text-xs italic">{{ error.$message }}</div>
+                </div>
               </div>
               <div>
                 <label class="inline-flex items-center cursor-pointer">
@@ -96,16 +101,16 @@
           </div>
         </div>
         <div class="flex flex-wrap mt-6 relative">
-          <div class="w-1/2">
+          <!-- <div class="w-1/2">
             <a href="javascript:void(0)" class="text-blueGray-200">
               <small>Forgot password?</small>
             </a>
-          </div>
-          <div class="w-1/2 text-right">
+          </div> -->
+          <!-- <div class="w-1/2 text-right">
             <router-link to="/auth/register" class="text-blueGray-200">
               <small>Create new account</small>
             </router-link>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -114,63 +119,87 @@
 <script>
 // import github from "@/assets/img/github.svg";
 // import google from "@/assets/img/google.svg";
-// import { useAuthStore } from '@/stores';
+import useVuelidate from '@vuelidate/core'
+import { required, email } from '@vuelidate/validators'
+import { useAuthStore } from '@/stores';
+import { createToast } from 'mosha-vue-toastify';
 import API from '@/api'
-
-// const auth = useAuthStore();
 
 export default {
   data() {
     return {
-    //   github,
-    //   google,
-      email: 'account@voilamed.com',
-      password: '123456',
-      rememberMe: false,
+        //   github,
+        //   google,
+        form: {
+            email: 'account@voilamed.com',
+            password: '123456',
+            rememberMe: false,
+        }
     };
   },
+  setup() {
+    const authStore = useAuthStore();
+    return { 
+        authStore,
+        v$: useVuelidate()
+    };
+  },
+  validations() {
+        return {
+            form: {
+                email: {
+                    required,
+                    email
+                },
+                password: {
+                    required,
+                },
+            },
+        }
+    },
   methods: {
-    login() {
-        console.log("login");
-        // this.$v.email.$touch();
-        // this.$v.password.$touch();
-        // if (this.$v.email.$anyError || this.$v.password.$anyError) {
-        //     return;
-        // }
+    async login() {
+        const result = await this.v$.$validate()
+            if (result) {
 
         const data = {
-            email: this.email,
-            password: this.password,
-            rememberMe: this.rememberMe
+            email: this.form.email,
+            password: this.form.password,
+            rememberMe: this.form.rememberMe
         }
-        console.log('data here:', data);
-
         API.login(
             data,
             data => {
                 console.log(data)
                     if (data.id) {
-                        // localStorage.setItem('loginEmail', data.email)
-                        // auth.user = data.email;
-                        localStorage.setItem('users', JSON.stringify(data))
+                        this.authStore.user = JSON.stringify(data)
                         this.$router.push("/admin/dashboard");
+                        createToast({
+                                title: 'Logged in Successfully',
+                        },
+                        {
+                            type: 'success',
+                        })
                     } else {
+                        this.authStore.user = ''
                         this.$swal({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Invalid Credentials',
+                            text: 'Invalid Credentials!',
                         })
                     }
                 },
                 err => {
+                    this.authStore.user = ''
                     this.$swal({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Something went wrong!',    
+                        text: 'Invalid Credentials!',    
                     })
                     console.log('err :', err);
             }
         )
+    }
     }
   }
 };

@@ -77,7 +77,7 @@ export default {
         )},
         startSurvey(surveyId) {
             console.log('surveyId :', surveyId);
-            this.$router.push(`/admin/survey-solution/${surveyId}`)
+            this.$router.push('/admin/survey-solution')
         }
     }
 };

@@ -17,64 +17,20 @@
                 </template>
 
                 <template v-slot:text>
-                    <form class="w-full max-w-lg" @submit.prevent="onSubmit">
+                    <v-divider class="border-opacity-100" color="info"></v-divider>
+                    <form class="w-full max-w-lg mt-4" @submit.prevent="onSubmit">
                         <div class="flex flex-wrap -mx-3 mb-3">
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-survey-title">
                                     Survey Title
                                 </label>
                                 <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white" v-model="form.surveyTitle" id="grid-survey-title" type="text" placeholder="Enter Survey Title">
+                                {{ form.surveyTitle }}
                                 <div class="input-errors" v-for="(error, index) of v$.form.surveyTitle.$errors" :key="index">
                                     <div class="text-red-500 text-xs italic">{{ error.$message }}</div>
                                 </div>
                             </div>
-                            <!-- <div class="w-full md:w-1/2 px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                                    Event Slug
-                                </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" v-model="form.eventSlug" id="grid-last-name" type="text" placeholder="Enter Event Slug">
-                                <div class="input-errors" v-for="(error, index) of v$.form.eventSlug.$errors" :key="index">
-                                    <div class="text-red-500 text-xs italic">{{ error.$message }}</div>
-                                </div>
-                            </div> -->
                         </div>
-                        <!-- <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-                                    Event Description
-                                </label>
-                                <textarea class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" v-model="form.eventDesc" id="grid-password" type="password" placeholder="Enter Your Description"></textarea>
-                                <div class="input-errors" v-for="(error, index) of v$.form.eventDesc.$errors" :key="index">
-                                    <div class="text-red-500 text-xs italic">{{ error.$message }}</div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-                                    Start Time
-                                </label>
-                                <div class="date-field">
-                                    <Datepicker v-model="form.startDate" time-picker />
-                                </div>
-                                <div class="input-errors" v-for="(error, index) of v$.form.startDate.$errors" :key="index">
-                                    <div class="text-red-500 text-xs italic">{{ error.$message }}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-                                    End Time
-                                </label>
-                                <div class="date-field">
-                                    <Datepicker v-model="form.endDate" time-picker />
-                                </div>
-                                <div class="input-errors" v-for="(error, index) of v$.form.endDate.$errors" :key="index">
-                                    <div class="text-red-500 text-xs italic">{{ error.$message }}</div>
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="flex flex-wrap -mx-3 mb-2 px-3 toggle-sec items-center items-end">
                             <p>Body Part: Any Body Part</p>
                             <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs ml-2" size="small" @click="changeBodyType">
@@ -83,15 +39,40 @@
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-2 px-3 toggle-sec">
                             <p>Status</p>
-                            <Toggle v-model="form.isSurveyEvent" />
+                            <Toggle v-model="form.status" />
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-2">
                             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                <QuestionAnswerComponent />
+                                <div>
+                                    <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-6" size="small" @click="addQuestion">
+                                    <i class="fas fa-plus"></i> Add Question
+                                    </v-btn>
+                                    <!-- <button @click="addQuestion"><i class="fas fa-plus"></i> Add Question</button> -->
+                                    <div class="que-field mx-auto mt-5 space-y-5" v-for="(question, index) in form.questions" :key="index">
+                                    <div class="flex justify-between img-wrap">
+                                        <strong class="text-xl align-center cursor-pointer alert-del close" @click="spliceQuestion(index)">&times;</strong>
+                                        <div class="container border-solid border-2 border-indigo-600 border-radius-5 mt-2 text-center custom" style="">
+                                        <h2>Question {{ index+1 }}:</h2>
+                                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white mb-3 mt-2" id="question.id" type="text"  v-model="question.text" placeholder="Enter question">
+                                        <div class="ans-field flex" v-for="(answer, aIndex) in question.answers" :key="aIndex">
+                                            <span class="m-3"><h1>{{ aIndex+1 }}.</h1></span>
+                                            <input class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white mb-3 mr-3" id="answer" type="text" v-model="answer.text" placeholder="Enter answer">
+                                            <v-btn class="bg-red text-none text-white font-bold font-bold uppercase text-xs mr-1 mt-3" size="small" @click="removeAnswer(index, aIndex)">
+                                                <i class="fas fa-minus"></i>
+                                            </v-btn>
+                                        </div>
+                                        <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-6" size="small" @click="addAnswer(index)">
+                                            <i class="fas fa-plus"></i> Add Answer
+                                        </v-btn>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="float-right">
-                            <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-6" size="small" :disabled="v$.form.$invalid" @click="submit">
+                            <v-btn class="bg-green text-none text-white font-bold font-bold uppercase text-xs mr-1 mb-6" size="small" @click="submit">
+                                <!-- :disabled="v$.form.$invalid"  -->
                                 Submit
                             </v-btn>
                         </div>
@@ -103,37 +84,25 @@
 </template>
 
 <script>
-// import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
-// import Multiselect from '@vueform/multiselect'
 import useVuelidate from '@vuelidate/core'
 import Toggle from '@vueform/toggle'
-import { required, minLength } from '@vuelidate/validators'
-import QuestionAnswerComponent from "@/components/QuestionAnswerComponent.vue";
+import { required, minLength, sameAs } from '@vuelidate/validators'
 import API from '@/api'
 
 export default {
     components: {
-        // Datepicker,
-        // Multiselect,
         Toggle,
-        QuestionAnswerComponent
     },
     setup() {
         return { v$: useVuelidate() }
     },
     data() {
         return {
-            users: [],
-            options: ['list', 'of', 'options'],
             form: {
-                surveyTitle: null,
-                eventSlug: null,
-                eventDesc: null,
-                startDate: null,
-                endDate: null,
-                isSurveyEvent: false,
-                participantUserIds: [],
+                surveyTitle: '',
+                status: false,
+                questions: []
             }
         }
     },
@@ -142,29 +111,13 @@ export default {
             form: {
                 surveyTitle: {
                     required,
-                },
-                eventSlug: {
-                    required,
                     min: minLength(6)
                 },
-                eventDesc: {
-                    required,
-                    min: minLength(6)
-                },
-                startDate: {
-                    required,
-                },
-                endDate: {
-                    required,
-                },
-                participantUserIds: {
-                    required
-                }
+                status: sameAs(true)
             },
         }
     },
     mounted() {
-        // this.getUsers()
     },
     methods: {
         getUsers() {
@@ -195,13 +148,27 @@ export default {
             )
         },
         async submit() {
+            console.log('this.form :', this.form);
             const result = await this.v$.$validate()
+            console.log('this.v$.$validate() :', result);
             if (result) {
-                this.saveAppointment()
+                // this.saveAppointment()
             } else return
         },
         changeBodyType() {
             console.log('changeBodyType');
+        },
+        addQuestion() {
+            this.form.questions.push({ text: "", answers: [] });
+        },
+        spliceQuestion(i) {
+            this.form.questions.splice(i, 1);
+        },
+        addAnswer(questionIndex) {
+            this.form.questions[questionIndex].answers.push({ text: "" });
+        },
+        removeAnswer(q, a) {
+            this.form.questions[q].answers.splice(a, 1);
         }
     }
 };

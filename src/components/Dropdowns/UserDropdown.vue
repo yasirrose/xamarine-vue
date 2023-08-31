@@ -60,6 +60,7 @@
 
 <script>
 import { createPopper } from "@popperjs/core";
+import { useAuthStore } from '@/stores';
 
 import image from "@/assets/img/team-1-800x800.jpg";
 
@@ -69,6 +70,10 @@ export default {
       dropdownPopoverShow: false,
       image: image,
     };
+  },
+  setup() {
+    const authStore = useAuthStore();
+    return { authStore };
   },
   methods: {
     toggleDropdown: function (event) {
@@ -82,11 +87,9 @@ export default {
         });
       }
     },
-    logout() {
-      console.log("logout");
-      localStorage.removeItem("loginEmail");
-      localStorage.removeItem("id");
-      this.$router.push("/auth/login");
+    async logout() {
+        await this.authStore.logout();
+        this.$router.push("/auth/login");
     }
   },
 };
