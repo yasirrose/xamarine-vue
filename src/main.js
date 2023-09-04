@@ -1,24 +1,24 @@
 import { createApp } from "vue";
-import { createWebHistory, createRouter } from "vue-router";
-import VueSweetalert2 from "vue-sweetalert2";
-import moment from "moment";
-import { VueSignaturePad } from "vue-signature-pad";
-import Toggle from "@vueform/toggle";
-import PinchScrollZoom from "@coddicat/vue-pinch-scroll-zoom";
-
 import { createPinia } from "pinia";
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import { useAuthStore } from "@/stores";
+import { createWebHistory, createRouter } from "vue-router";
+import { VueSignaturePad } from "vue-signature-pad";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+import PinchScrollZoom from "@coddicat/vue-pinch-scroll-zoom";
+import VueSweetalert2 from "vue-sweetalert2";
+import Toggle from "@vueform/toggle";
+import moment from "moment";
+
 // styles
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import "@/assets/styles/tailwind.css";
-import "sweetalert2/dist/sweetalert2.min.css";
 import "@coddicat/vue-pinch-scroll-zoom/style.css";
 import "material-icons/iconfont/material-icons.css";
+import "sweetalert2/dist/sweetalert2.min.css";
 import 'mosha-vue-toastify/dist/style.css'
+import "@/assets/styles/tailwind.css";
 
-// mouting point for the whole app
+// mounting point for the whole app
 
 import App from "@/App.vue";
 
@@ -48,6 +48,7 @@ import Tables from "@/views/admin/Tables.vue";
 import Maps from "@/views/admin/Maps.vue";
 import GenderSelection from "@/views/admin/GenderSelection.vue";
 import SurveySolution from "@/views/admin/SurveySolution.vue";
+import PageNotFound from "@/views/PageNotFound.vue";
 
 // views for Auth layout
 
@@ -73,6 +74,7 @@ const vuetify = createVuetify({
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
+
 // routes
 
 const routes = [
@@ -187,11 +189,15 @@ const routes = [
     path: "/profile",
     component: Profile,
   },
+  {
+    path: "/404-page-not-found",
+    component: PageNotFound,
+  },
   // {
   //   path: "/",
   //   component: Index,
   // },
-  { path: "/:pathMatch(.*)*", redirect: "/auth/login" },
+  { path: "/:pathMatch(.*)*", redirect: "/404-page-not-found" },
 ];
 
 const router = createRouter({
@@ -200,12 +206,14 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-  const publicPages = ["/auth/login"];
+    const authStore = useAuthStore();
+  const publicPages = [authStore.returnUrl];
   const authRequired = !publicPages.includes(to.path);
-  const authStore = useAuthStore();
 
   if (authRequired && !authStore.user) {
-    return "/auth/login";
+    return authStore.returnUrl;
+  } else if(authStore.IsLoggedIn && to.path == authStore.returnUrl) {
+    return '/admin/dashboard'
   }
 });
 

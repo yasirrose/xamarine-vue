@@ -164,108 +164,6 @@
 var quiz = {
       user: "Dave",
       questions: []
-    //   [
-    //      {
-    //         Text: "What is the full form of HTTP?",
-    //         Answers: [
-    //            { Text: "Hyper Text transfer package" },
-    //            { Text: "Hyper Text transfer protocol", correct: true },
-    //            { Text: "Hyphenation Text test program" },
-    //            { Text: "None of the above" }
-    //         ]
-    //      },
-    //      {
-    //         Text: "HTML document start and end with which tag pairs?",
-    //         Answers: [
-    //            { Text: "HTML", correct: true },
-    //            { Text: "WEB" },
-    //            { Text: "HEAD" },
-    //            { Text: "BODY" }
-    //         ]
-    //      },
-    //      {
-    //         Text: "Which tag is used to create body Text in HTML?",
-    //         Answers: [
-    //            { Text: "HEAD" },
-    //            { Text: "BODY", correct: true },
-    //            { Text: "TITLE" },
-    //            { Text: "TEXT" }
-    //         ]
-    //      },
-    //      {
-    //         Text: "Outlook Express is _________",
-    //         Answers: [
-    //            { Text: "E-Mail Client", correct: true },
-    //            { Text: "Browser" },
-    //            {
-    //               Text: "Search Engine"
-    //            },
-    //            { Text: "None of the above" }
-    //         ]
-    //      },
-    //      {
-    //         Text: "What is a search engine?",
-    //         Answers: [
-    //            { Text: "A hardware component " },
-    //            {
-    //               Text: "A machinery engine that search data"
-    //            },
-    //            { Text: "A web site that searches anything", correct: true },
-    //            { Text: "A program that searches engines" }
-    //         ]
-    //      },
-    //      {
-    //         Text:
-    //            "What does the .com domain represents?",
-    //         Answers: [
-    //            { Text: "Network" },
-    //            { Text: "Education" },
-    //            { Text: "Commercial", correct: true },
-    //            { Text: "None of the above" }
-    //         ]
-    //      },
-    //      {
-    //         Text: "In Satellite based communication, VSAT stands for? ",
-    //         Answers: [
-    //            { Text: " Very Small Aperture Terminal", correct: true },
-    //            { Text: "Varying Size Aperture Terminal " },
-    //            {
-    //               Text: "Very Small Analog Terminal"
-    //            },
-    //            { Text: "None of the above" }
-    //         ]
-    //      },
-    //      {
-    //         Text: "What is the full form of TCP/IP? ",
-    //         Answers: [
-    //            { Text: "Telephone call protocol / international protocol" },
-    //            { Text: "Transmission control protocol / internet protocol", correct: true },
-    //            { Text: "Transport control protocol / internet protocol " },
-    //            { Text: "None of the above" }
-    //         ]
-    //      },
-    //      {
-    //         Text:
-    //            "What is the full form of HTML?",
-    //         Answers: [
-    //            {
-    //               Text: "Hyper Text marking language"
-    //            },
-    //            { Text: "Hyphenation Text markup language " },
-    //            { Text: "Hyper Text markup language", correct: true },
-    //            { Text: "Hyphenation test marking language" }
-    //         ]
-    //      },
-    //      {
-    //         Text: "\"Yahoo\", \"Infoseek\" and \"Lycos\" are _________?",
-    //         Answers: [
-    //            { Text: "Browsers " },
-    //            { Text: "Search Engines", correct: true },
-    //            { Text: "News Group" },
-    //            { Text: "None of the above" }
-    //         ]
-    //      }
-    //   ]
    },
    userResponseSkelaton = Array(quiz.questions.length).fill(null);
 
@@ -273,6 +171,7 @@ var quiz = {
 import useVuelidate from '@vuelidate/core'
 // import { useAuthStore } from '../../stores/auth.store';
 // import { Progress } from 'flowbite-vue'
+import { useSurveyStore } from "@/stores";
 import API from '@/api'
 import { required } from '@vuelidate/validators';
 
@@ -281,10 +180,10 @@ export default {
         // Progress
     },
     setup() {
-        // const myStore = useAuthStore();
+        const surveyStore = useSurveyStore();
         return {
-            // myVariable: myStore.myVariable,
-            v$: useVuelidate() 
+            surveyStore,
+            v$: useVuelidate()
         }
     },
     data() {
@@ -296,12 +195,13 @@ export default {
             isActive: false,
             form: {
                 id: this.$route.params.id
-            }
+            },
+            selectedSurvey: ''
         }
     },
     filters: {
       charIndex: function(i) {
-         return String.fromCharCode(97 + i);
+        return String.fromCharCode(97 + i);
       }
    },
     validations() {
@@ -345,6 +245,7 @@ export default {
         async submit() {
             const result = await this.v$.$validate()
             if (result) {
+                this.surveyStore.addNewSurvey(this.selectedSurvey);
                 this.$router.push({ path: '/admin/signature'})
             } else return
         },
@@ -352,10 +253,9 @@ export default {
             API.getSurvey(
                 this.form.id,
                 data => {
-                console.log('data :', data);
                     if(data.questions.length) {
+                        this.selectedSurvey = data;
                         this.quiz.questions = JSON.parse(data.questions);
-                        console.log('this.form.questions :', this.quiz.questions);
                     }
                 },
                 err => {

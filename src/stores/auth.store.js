@@ -6,6 +6,11 @@ export const useAuthStore = defineStore({
         user: null,
         returnUrl: '/auth/login',
     }),
+    getters: {
+        IsLoggedIn() {
+            return this.user? true: false;
+        },
+      },
     persist: true,
     actions: {
         logout() {

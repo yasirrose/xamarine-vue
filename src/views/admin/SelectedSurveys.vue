@@ -4,7 +4,7 @@
         <li>
           <ul class="htmlCss-sub-menu sub-menu bg-purple-darken-4 rounded-xl" id="style-3">
             <li v-for="survey in fileMenuItems" :key="survey.id" @click="startSurvey(survey.id)" class="cursor-pointer">
-                <a href="javascript:void(0)">{{ survey.displayname?? 'No Data' }}</a>
+                <a href="javascript:void(0)">{{ survey.displayname?? 'Error' }}</a>
                 <span class="material-icons">keyboard_arrow_right</span>
             </li>
             <!-- <li class="more">
@@ -25,12 +25,17 @@
 <script>
 import useVuelidate from '@vuelidate/core'
 // import { required, sameAs } from '@vuelidate/validators'
-import API from '@/api'
+import { useSurveyStore } from "@/stores";
+// import API from '@/api'
 
 export default {
     components: {},
     setup() {
-        return { v$: useVuelidate() }
+        const surveyStore = useSurveyStore();
+        return {
+            surveyStore,
+            v$: useVuelidate()
+        }
     },
     data() {
         return {
@@ -43,8 +48,7 @@ export default {
     //     }
     // },
     mounted() {
-        this.getSurveysData()
-        console.log('getSurveysData :');
+        this.getSurveysData();
     },
     methods: {
         async submit() {
@@ -64,17 +68,9 @@ export default {
         }
         },
         getSurveysData() {
-            API.getSurveys(
-                data => {
-                    console.log(data)
-                    if (data.length > 0) {
-                        this.fileMenuItems = data;
-                    }
-                },
-            err => {
-                console.log('err :', err);
-            }
-        )},
+            console.log('this.surveyStore.attemptedSurveys :', this.surveyStore.attemptedSurveys);
+            this.fileMenuItems = this.surveyStore.attemptedSurveys;
+        },
         startSurvey(surveyId) {
             console.log('surveyId :', surveyId);
             this.$router.push('/admin/survey-solution')
