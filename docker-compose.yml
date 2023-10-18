@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  app:
+    build: ./
+    container_name: voilamed_container
+    ports:
+      - '8081:8081'
+    volumes:
+      - "/app/node_modules" 
+      - ./:/app
+    tty: true
+    stdin_open: true
